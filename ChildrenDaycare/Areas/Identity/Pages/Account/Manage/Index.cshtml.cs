@@ -59,6 +59,25 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Required(ErrorMessage = "Please enter your fullname!")]
+            [Display(Name = "Fullname")]
+            [StringLength(100, ErrorMessage = "Only 5 - 100 chars allowed in this column!", MinimumLength = 5)]
+            public string UserFullname { get; set; }
+
+            [Required(ErrorMessage = "Please enter your age!")]
+            [Display(Name = "Age")]
+            [Range(13, 100, ErrorMessage = "This website only open for 13 years old and above person!")]
+            public int UserAge { get; set; }
+
+            [Required(ErrorMessage = "Please enter your address!")]
+            [Display(Name = "Address")]
+            public string UserAddress { get; set; }
+
+            [Required(ErrorMessage = "Please select your date of birth!")]
+            [Display(Name = "Date of Birth")]
+            [DataType(DataType.Date)]
+            public DateTime UserDOB { get; set; }
         }
 
         private async Task LoadAsync(ChildrenDaycareUser user)
@@ -70,7 +89,12 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                //left handside refer to the inputmodel class, the right handside refer to the class
+                PhoneNumber = phoneNumber,
+                UserFullname = user.UserFullname,
+                UserAge = user.UserAge,
+                UserAddress = user.UserAddress,
+                UserDOB = user.UserDOB
             };
         }
 
@@ -110,6 +134,28 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+
+            if (Input.UserFullname != user.UserFullname)
+            {
+                user.UserFullname = Input.UserFullname;
+            }
+
+            if (Input.UserAge != user.UserAge)
+            {
+                user.UserAge = Input.UserAge;
+            }
+
+            if (Input.UserAddress != user.UserAddress)
+            {
+                user.UserAddress = Input.UserAddress;
+            }
+
+            if (Input.UserDOB != user.UserDOB)
+            {
+                user.UserDOB = Input.UserDOB;
+            }
+
+            await _userManager.UpdateAsync(user);   //this line will only update your content in the db table
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

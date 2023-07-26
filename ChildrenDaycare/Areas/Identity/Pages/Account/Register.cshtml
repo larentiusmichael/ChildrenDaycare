@@ -13,7 +13,27 @@
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                <input asp-for="Input.UserFullname" class="form-control" autocomplete="userfullname" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.UserFullname">Fullname</label>
+                <span asp-validation-for="Input.UserFullname" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.UserAge" class="form-control" autocomplete="userage" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.UserAge">Age</label>
+                <span asp-validation-for="Input.UserAge" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.UserAddress" class="form-control" autocomplete="useraddress" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.UserAddress">Address</label>
+                <span asp-validation-for="Input.UserAddress" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.UserDOB" class="form-control" autocomplete="userdob" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.UserDOB">Date of Birth</label>
+                <span asp-validation-for="Input.UserDOB" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" autocomplete="email" aria-required="true" placeholder="name@example.com" />
                 <label asp-for="Input.Email">Email</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
