@@ -20,5 +20,8 @@ public class ChildrenDaycareUser : IdentityUser
 
     [PersonalData]
     public DateTime UserDOB { get; set; }
+
+    [PersonalData]
+    public string userrole { get; set; }
 }
 

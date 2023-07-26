@@ -8,7 +8,7 @@ var connectionString = builder.Configuration.GetConnectionString("ChildrenDaycar
 
 builder.Services.AddDbContext<ChildrenDaycareContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<ChildrenDaycareUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ChildrenDaycareContext>();
+builder.Services.AddDefaultIdentity<ChildrenDaycareUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<ChildrenDaycareContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

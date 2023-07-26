@@ -4,6 +4,7 @@ using ChildrenDaycare.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChildrenDaycare.Migrations
 {
     [DbContext(typeof(ChildrenDaycareContext))]
-    partial class ChildrenDaycareContextModelSnapshot : ModelSnapshot
+    [Migration("20230726145351_adduserrole")]
+    partial class adduserrole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,8 +89,8 @@ namespace ChildrenDaycare.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("userrole")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("userrole")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

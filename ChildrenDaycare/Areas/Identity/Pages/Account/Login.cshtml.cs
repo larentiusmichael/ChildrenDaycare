@@ -15,17 +15,20 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using ChildrenDaycare.Areas.Identity.Data;
 
 namespace ChildrenDaycare.Areas.Identity.Pages.Account
 {
     public class LoginModel : PageModel
     {
         private readonly SignInManager<ChildrenDaycareUser> _signInManager;
+        private readonly UserManager<ChildrenDaycareUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<ChildrenDaycareUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ChildrenDaycareUser> signInManager, UserManager<ChildrenDaycareUser> userManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _logger = logger;
         }
 
@@ -113,10 +116,29 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+
+                var users = from m in _userManager.Users
+                            where m.Email.Equals(Input.Email)
+                            select m.userrole;
+
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+
+                    foreach (string userrole in users)
+                    {
+                        if (String.IsNullOrEmpty(userrole))
+                            return RedirectToAction("Index", "Home");
+                        else if (userrole.Equals("Admin"))
+                            return RedirectToAction("Privacy", "Home");        //subject to change
+                        else if (userrole.Equals("Takecare Giver"))
+                            return RedirectToAction("Privacy", "Home");        //subject to change
+                        else
+                            return RedirectToAction("Privacy", "Home");        //subject to change
+                            //return Redirect("~/Identity/Account/Manage/Index");
+                    }
+                    //return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {

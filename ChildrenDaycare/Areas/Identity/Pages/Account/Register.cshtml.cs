@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ChildrenDaycare.Areas.Identity.Pages.Account
 {
@@ -30,13 +31,15 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ChildrenDaycareUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<ChildrenDaycareUser> userManager,
             IUserStore<ChildrenDaycareUser> userStore,
             SignInManager<ChildrenDaycareUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +47,7 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -69,6 +73,16 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+
+        public SelectList RoleSelectList = new SelectList(
+            new List<SelectListItem>
+            {
+                new SelectListItem{Selected = true, Text = "Select Role", Value = ""},
+                new SelectListItem{Selected = true, Text = "Public", Value = "Public"},
+                new SelectListItem{Selected = true, Text = "Takecare Giver", Value = "Takecare Giver"},
+                new SelectListItem{Selected = true, Text = "Admin", Value = "Admin"},
+            }, "Value", "Text", 1);
+
         public class InputModel
         {
             /// <summary>
@@ -117,6 +131,10 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
             [Display(Name = "Date of Birth")]
             [DataType(DataType.Date)]
             public DateTime UserDOB { get; set; }
+
+            [Required(ErrorMessage = "Please select your role!")]
+            [Display(Name = "User Role")]
+            public string userrole { set; get; }
         }
 
 
@@ -142,12 +160,31 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
                 user.UserAge = Input.UserAge;
                 user.UserDOB = Input.UserDOB;
                 user.UserAddress = Input.UserAddress;
+                user.userrole = Input.userrole;
                 user.EmailConfirmed = true;
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
+                    //subject to change
+                    bool roleresult = await _roleManager.RoleExistsAsync("Admin");
+                    if (!roleresult)
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                    }
+                    roleresult = await _roleManager.RoleExistsAsync("Takecare Giver");
+                    if (!roleresult)
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("Takecare Giver"));
+                    }
+                    roleresult = await _roleManager.RoleExistsAsync("Public");
+                    if (!roleresult)
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole("Public"));
+                    }
+                    await _userManager.AddToRoleAsync(user, Input.userrole);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     //var userId = await _userManager.GetUserIdAsync(user);

@@ -13,22 +13,22 @@
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.UserFullname" class="form-control" autocomplete="userfullname" aria-required="true" placeholder="name@example.com" />
+                <input asp-for="Input.UserFullname" class="form-control" autocomplete="userfullname" aria-required="true" placeholder="Laurentius Michael" />
                 <label asp-for="Input.UserFullname">Fullname</label>
                 <span asp-validation-for="Input.UserFullname" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.UserAge" class="form-control" autocomplete="userage" aria-required="true" placeholder="name@example.com" />
+                <input asp-for="Input.UserAge" class="form-control" autocomplete="userage" aria-required="true" placeholder="25" />
                 <label asp-for="Input.UserAge">Age</label>
                 <span asp-validation-for="Input.UserAge" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.UserAddress" class="form-control" autocomplete="useraddress" aria-required="true" placeholder="name@example.com" />
+                <input asp-for="Input.UserAddress" class="form-control" autocomplete="useraddress" aria-required="true" placeholder="Block A, 15th Floor, Jalan Tun Razak" />
                 <label asp-for="Input.UserAddress">Address</label>
                 <span asp-validation-for="Input.UserAddress" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.UserDOB" class="form-control" autocomplete="userdob" aria-required="true" placeholder="name@example.com" />
+                <input asp-for="Input.UserDOB" class="form-control" autocomplete="userdob" aria-required="true" placeholder="08/31/1957" />
                 <label asp-for="Input.UserDOB">Date of Birth</label>
                 <span asp-validation-for="Input.UserDOB" class="text-danger"></span>
             </div>
@@ -46,6 +46,11 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label asp-for="Input.ConfirmPassword">Confirm Password</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Input.userrole"></label>
+                <select asp-for="Input.userrole" asp-items="Model.RoleSelectList" class="form-control"></select>
+                <span asp-validation-for="Input.userrole" class="text-danger"></span>
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
