@@ -8,23 +8,28 @@ namespace ChildrenDaycare.Models
         [Key]   //primary key
         public int SlotID { get; set; }
 
+        [Required(ErrorMessage = "Please select slot date!")]
         public DateTime SlotDate { get; set; }
 
+        [Required(ErrorMessage = "Please select time!")]
         public TimeSpan StartTime { get; set; }
 
+        [Required(ErrorMessage = "Please select time!")]
         public TimeSpan EndTime { get; set; }
 
         [ForeignKey("Id")]
+        [Required(ErrorMessage = "Please select takecare giver!")]
         public string TakecareGiverID { get; set; }
 
         public bool isBooked { get; set; }
 
-        public string ChildFullname { get; set; }
+        public string? ChildFullname { get; set; }
 
-        public int ChildAge { get; set; }
+        public int? ChildAge { get; set; }
 
-        public DateTime ChildDOB { get; set; }
+        public DateTime? ChildDOB { get; set; }
 
+        [Required(ErrorMessage = "Please enter price!")]
         public decimal SlotPrice { get; set; }
 
     }

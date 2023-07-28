@@ -1,11 +1,56 @@
-﻿
+﻿@model List<ChildrenDaycare.Controllers.SlotController.SlotViewModel>
 @{
     ViewData["Title"] = "Index";
 }
 
-@if(ViewBag.msg != "")
+<h1>Slot List Infromation:</h1>
+<br />
+<hr />
+@if (ViewBag.msg != "")
 {
     <span style="background-color:aquamarine">@ViewBag.msg</span>
 }
-<h1>Index</h1>
+<hr />
+<br />
+<table border="1">
+    <!--Static row-->
+    <tr style="background-color:yellow">
+        <th>Slot ID</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Takecare Giver</th>
+        <th>Child Fullname</th>
+        <th>Child Age</th>
+        <th>Child DOB</th>
+        <th>Price</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <!--Dynamic row based on database-->
+    @foreach (var singleslot in Model)
+    {
+        <tr>
+            <td>@singleslot.SlotID</td>
+            <td>@singleslot.SlotDate.ToString("yyyy-MM-dd")</td>
+            <td>@singleslot.StartTime</td>
+            <td>@singleslot.EndTime</td>
+            <td>@singleslot.TakecareGiverName</td>
+            <td>@singleslot.ChildFullname</td>
+            <td>@singleslot.ChildAge</td>
+            <td>@singleslot.ChildDOB?.ToString("yyyy-MM-dd")</td>
+            <td>@singleslot.SlotPrice</td>
+            <td>
+                <a asp-action="editpage" asp-controller="Slot" asp-route-SlotID="@singleslot.SlotID">
+                    <button>Edit</button>
+                </a>
+            </td>
+            <td>
+                <a asp-action="deletepage" asp-controller="Slot" asp-route-SlotID="@singleslot.SlotID">
+                    <button>Delete</button>
+                </a>
+            </td>
+        </tr>
+    }
+</table>
 

@@ -12,24 +12,24 @@
         <form asp-action="AddSlot">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mb-3">
-                <label asp-for="Input.SlotDate" class="control-label">Slot Date</label>
-                <input asp-for="Input.SlotDate" class="form-control" />
-                <span asp-validation-for="Input.SlotDate" class="text-danger"></span>
+                <label asp-for="slot.SlotDate" class="control-label">Slot Date</label>
+                <input asp-for="slot.SlotDate" class="form-control" type="date" />
+                <span asp-validation-for="slot.SlotDate" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Input.StartTime">Time</label>
-                <select asp-for="Input.StartTime" asp-items="@Model.TimeSelectList" class="form-control"></select>
-                <span asp-validation-for="Input.StartTime" class="text-danger"></span>
+                <label asp-for="slot.StartTime">Time</label>
+                <select asp-for="slot.StartTime" asp-items="@Model.TimeSelectList" class="form-control"></select>
+                <span asp-validation-for="slot.StartTime" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Input.TakecareGiverID">Takecare Giver</label>
-                <select asp-for="Input.TakecareGiverID" asp-items="@Model.TakecareGiverSelectList" class="form-control"></select>
-                <span asp-validation-for="Input.TakecareGiverID" class="text-danger"></span>
+                <label asp-for="slot.TakecareGiverID">Takecare Giver</label>
+                <select asp-for="slot.TakecareGiverID" asp-items="@Model.TakecareGiverSelectList" class="form-control"></select>
+                <span asp-validation-for="slot.TakecareGiverID" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
-                <label asp-for="Input.SlotPrice" class="control-label">Price</label>
-                <input asp-for="Input.SlotPrice" class="form-control" type="number" step="0.10" />
-                <span asp-validation-for="Input.SlotPrice" class="text-danger"></span>
+                <label asp-for="slot.SlotPrice" class="control-label">Price</label>
+                <input asp-for="slot.SlotPrice" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="slot.SlotPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

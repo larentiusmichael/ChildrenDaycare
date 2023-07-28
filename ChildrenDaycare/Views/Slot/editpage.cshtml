@@ -1,0 +1,71 @@
+﻿@model ChildrenDaycare.Controllers.SlotController
+@{
+    ViewData["Title"] = "editpage";
+}
+
+<h1>Edit Slot Information</h1>
+<br />
+<hr />
+<br />
+<form method="post" asp-action="editslot" asp-controller="Slot">
+    <table border="1">
+        <tr>
+            <th>Slot ID</th>
+            <td>
+                <input asp-for="slot.SlotID" readonly>
+                <span asp-validation-for="slot.SlotID"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>
+                <input asp-for="slot.SlotDate" class="form-control" type="date" />
+                <span asp-validation-for="slot.SlotDate"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>Time</th>
+            <td>
+                <select asp-for="slot.StartTime" asp-items="@Model.TimeOption" class="form-control"></select>
+                <span asp-validation-for="slot.StartTime"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>Takecare Giver</th>
+            <td>
+                <select asp-for="slot.TakecareGiverID" asp-items="@Model.TakecareGiverOption" class="form-control"></select>
+                <span asp-validation-for="slot.TakecareGiverID"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>Child Fullname</th>
+            <td>
+                <input asp-for="slot.ChildFullname" readonly>
+                <span asp-validation-for="slot.ChildFullname"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>Child Age</th>
+            <td>
+                <input asp-for="slot.ChildAge" readonly>
+                <span asp-validation-for="slot.ChildAge"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>Child DOB</th>
+            <td>
+                <input asp-for="slot.ChildDOB" class="form-control" type="date" readonly>
+                <span asp-validation-for="slot.ChildDOB"></span>
+            </td>
+        </tr>
+        <tr>
+            <th>Price</th>
+            <td>
+                <input asp-for="slot.SlotPrice" type="number" step="0.01">
+                <span asp-validation-for="slot.SlotPrice"></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center"><button class="btn-outline-info" type="submit">Update Slot Info</button></td>
+        </tr>
+</form>
