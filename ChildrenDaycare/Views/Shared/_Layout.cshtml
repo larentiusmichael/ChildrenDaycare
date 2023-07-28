@@ -37,7 +37,10 @@
                             if (await UserManager.IsInRoleAsync(user, "Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Slot" asp-action="InsertForm">Add Slot</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Slot" asp-action="Index">View Slot</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Slot" asp-action="AddSlot">Add Slot</a>
                                 </li>
                             }
                         }
@@ -61,6 +64,9 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

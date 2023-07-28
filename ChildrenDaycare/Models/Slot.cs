@@ -10,9 +10,9 @@ namespace ChildrenDaycare.Models
 
         public DateTime SlotDate { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public TimeSpan StartTime { get; set; }
 
-        public DateTime EndTime { get; set; }
+        public TimeSpan EndTime { get; set; }
 
         [ForeignKey("Id")]
         public string TakecareGiverID { get; set; }

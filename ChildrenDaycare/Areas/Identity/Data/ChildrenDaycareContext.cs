@@ -14,6 +14,8 @@ public class ChildrenDaycareContext : IdentityDbContext<ChildrenDaycareUser>
 
     public DbSet<ChildrenDaycare.Models.Slot>SlotTable { get; set; }
 
+    public DbSet<ChildrenDaycareUser> AspNetUsers { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
