@@ -25,6 +25,8 @@ namespace ChildrenDaycare.Controllers
 
         public string BookerName { get; set; }
 
+        public string TakecareGiverName { get; set; }
+
         //create constructor for linking db connection to this file
         public SlotController(ChildrenDaycareContext context, UserManager<ChildrenDaycareUser> userManager)
         {
@@ -275,7 +277,7 @@ namespace ChildrenDaycare.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", new { msg = "Update Successfully!" });
             }
-            return View("editpage", this);
+            return View("editpage", slot.SlotID);
         }
 
         //display for public
@@ -315,7 +317,7 @@ namespace ChildrenDaycare.Controllers
 
         //book form - enter the details to book the slot
         [Authorize(Roles = "Public")]
-        public async Task<IActionResult> bookpage(int? SlotID)
+        public async Task<IActionResult> bookpage(int? SlotID, string? msg)
         {
 
             if (SlotID == null)
@@ -330,10 +332,10 @@ namespace ChildrenDaycare.Controllers
                 return NotFound();
             }
 
-            TimeOption = EditTimeSelectList(slot.StartTime);
-            TakecareGiverOption = EditTakecareGiverSelectList(slot.TakecareGiverID);
+            TakecareGiverName = await GetTakecareGiverName(slot.TakecareGiverID);
             BookerName = await GetBookerName(slot.BookerID);
 
+            ViewBag.msg = msg;
             return View(this);
         }
 
@@ -343,23 +345,24 @@ namespace ChildrenDaycare.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> bookslot(Slot slot)
         {
+            // Retrieve the currently logged-in user
+            var currentUser = await _userManager.GetUserAsync(User);
+
             if (ModelState.IsValid)
             {
-                // Retrieve the currently logged-in user
-                var currentUser = await _userManager.GetUserAsync(User);
-
                 if (currentUser != null)
                 {
                     // Assign the current user's ID to the slot's BookerID
                     slot.BookerID = currentUser.Id;
                     slot.isBooked = true;
-                  
+
                     _context.SlotTable.Update(slot);
                     await _context.SaveChangesAsync();
                     return RedirectToAction("PersonalBooking", new { msg = "Booked Successfully!" });
                 }
             }
-            return View("editpage", this);
+
+            return RedirectToAction("bookpage", new { SlotID = slot.SlotID, msg = "Please enter child fullname, age, and date of birth!" });
         }
 
         //display personal booking
@@ -435,6 +438,50 @@ namespace ChildrenDaycare.Controllers
             _context.SlotTable.Update(slot);
             await _context.SaveChangesAsync();
             return RedirectToAction("PersonalBooking", new { msg = "You have cancelled your booking with ID "+ SlotID +"!" });
+        }
+
+        //display for takecare giver
+        [Authorize(Roles = "Takecare Giver")]
+        public async Task<IActionResult> TakecareGiverDisplay()
+        {
+            // Retrieve the currently logged-in user
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            if (currentUser != null)
+            {
+                var slotList = await _context.SlotTable
+                    .Where(slot => slot.isBooked == true && slot.TakecareGiverID == currentUser.Id)
+                    .ToListAsync();
+
+                List<SlotViewModel> viewModelList = new List<SlotViewModel>();
+
+                foreach (var slot in slotList)
+                {
+                    SlotViewModel viewModel = new SlotViewModel
+                    {
+                        SlotID = slot.SlotID,
+                        SlotDate = slot.SlotDate,
+                        StartTime = slot.StartTime,
+                        EndTime = slot.EndTime,
+                        TakecareGiverID = slot.TakecareGiverID,
+                        isBooked = slot.isBooked,
+                        ChildFullname = slot.ChildFullname,
+                        ChildAge = slot.ChildAge,
+                        ChildDOB = slot.ChildDOB,
+                        SlotPrice = slot.SlotPrice,
+                        BookerID = slot.BookerID,
+                        TakecareGiverName = await GetTakecareGiverName(slot.TakecareGiverID),
+                        BookerName = await GetBookerName(slot.BookerID)
+                    };
+
+                    viewModelList.Add(viewModel);
+                }
+
+                return View(viewModelList);
+            }
+
+            // Handle the case when the user is not logged in (optional)
+            return RedirectToAction("Login", "Account"); // Redirect to login page
         }
 
     }

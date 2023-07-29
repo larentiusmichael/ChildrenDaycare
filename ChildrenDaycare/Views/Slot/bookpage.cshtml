@@ -6,63 +6,87 @@
 <h1>Enter Booking Details</h1>
 <br />
 <hr />
+@if (ViewBag.msg != "")
+{
+    <span style="background-color:orangered">@ViewBag.msg</span>
+}
+<hr />
 <br />
 <form method="post" asp-action="bookslot" asp-controller="Slot">
     <table border="1">
         <tr>
             <th>Slot ID</th>
             <td>
-                <input asp-for="slot.SlotID" readonly>
-                <span asp-validation-for="slot.SlotID"></span>
+                <input type="text" asp-for="slot.SlotID" readonly />
+                <input type="hidden" asp-for="slot.SlotID" />
             </td>
         </tr>
         <tr>
             <th>Date</th>
             <td>
-                <input asp-for="slot.SlotDate" class="form-control" type="date" readonly/>
-                <span asp-validation-for="slot.SlotDate"></span>
+                <input type="text" asp-for="slot.SlotDate" readonly />
+                <input type="hidden" asp-for="slot.SlotDate" />
             </td>
         </tr>
         <tr>
-            <th>Time</th>
+            <th>Start Time</th>
             <td>
-                <select asp-for="slot.StartTime" asp-items="@Model.TimeOption" class="form-control" readonly></select>
-                <span asp-validation-for="slot.StartTime"></span>
+                <input type="text" asp-for="slot.StartTime" readonly />
+                <input type="hidden" asp-for="slot.StartTime" />
+            </td>
+        </tr>
+        <tr>
+            <th>End Time</th>
+            <td>
+                <input type="text" asp-for="slot.EndTime" readonly />
+                <input type="hidden" asp-for="slot.EndTime" />
             </td>
         </tr>
         <tr>
             <th>Takecare Giver</th>
             <td>
-                <select asp-for="slot.TakecareGiverID" asp-items="@Model.TakecareGiverOption" class="form-control" readonly></select>
-                <span asp-validation-for="slot.TakecareGiverID"></span>
+                <input type="text" asp-for="TakecareGiverName" readonly />
+                <input type="hidden" asp-for="slot.TakecareGiverID" />
             </td>
         </tr>
         <tr>
             <th>Child Fullname</th>
             <td>
-                <input asp-for="slot.ChildFullname">
+                <input asp-for="slot.ChildFullname" required>
                 <span asp-validation-for="slot.ChildFullname"></span>
             </td>
         </tr>
         <tr>
             <th>Child Age</th>
             <td>
-                <input asp-for="slot.ChildAge">
+                <input asp-for="slot.ChildAge" required>
                 <span asp-validation-for="slot.ChildAge"></span>
             </td>
         </tr>
         <tr>
             <th>Child DOB</th>
             <td>
-                <input asp-for="slot.ChildDOB" class="form-control" type="date">
+                <input asp-for="slot.ChildDOB" class="form-control" type="date" required>
                 <span asp-validation-for="slot.ChildDOB"></span>
             </td>
         </tr>
         <tr>
             <th>Price</th>
             <td>
-                <input asp-for="slot.SlotPrice" type="number" step="0.01" readonly>
-                <span asp-validation-for="slot.SlotPrice"></span>
+                <input type="text" asp-for="slot.SlotPrice" readonly />
+                <input type="hidden" asp-for="slot.SlotPrice" />
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>
+                <input type="hidden" asp-for="slot.isBooked" />
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>
+                <input type="hidden" asp-for="slot.BookerID" />
             </td>
         </tr>
         <tr>

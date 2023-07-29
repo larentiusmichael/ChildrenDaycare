@@ -1,0 +1,39 @@
+﻿@model List<ChildrenDaycare.Controllers.SlotController.SlotViewModel>
+@{
+    ViewData["Title"] = "TakecareGiverDisplay";
+}
+
+<h1>Schedule List:</h1>
+<br />
+<hr />
+<br />
+<table border="1">
+    <!--Static row-->
+    <tr style="background-color:yellow">
+        <th>Slot ID</th>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Child Fullname</th>
+        <th>Child Age</th>
+        <th>Child DOB</th>
+        <th>Booker Name</th>
+        <th>Price</th>
+    </tr>
+    <!--Dynamic row based on database-->
+    @foreach (var singleslot in Model)
+    {
+        <tr>
+            <td>@singleslot.SlotID</td>
+            <td>@singleslot.SlotDate.ToString("yyyy-MM-dd")</td>
+            <td>@singleslot.StartTime</td>
+            <td>@singleslot.EndTime</td>
+            <td>@singleslot.ChildFullname</td>
+            <td>@singleslot.ChildAge</td>
+            <td>@singleslot.ChildDOB?.ToString("yyyy-MM-dd")</td>
+            <td>@singleslot.BookerName</td>
+            <td>@singleslot.SlotPrice</td>
+        </tr>
+    }
+</table>
+

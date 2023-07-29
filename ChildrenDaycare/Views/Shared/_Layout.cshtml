@@ -28,9 +28,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>*@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             var user = await UserManager.GetUserAsync(User);
@@ -43,6 +40,12 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Slot" asp-action="AddSlot">Add Slot</a>
                                 </li>
                             }
+                            if (await UserManager.IsInRoleAsync(user, "Takecare Giver"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Slot" asp-action="TakecareGiverDisplay">View Schedule</a>
+                                </li>
+                            }
                             if (await UserManager.IsInRoleAsync(user, "Public"))
                             {
                                 <li class="nav-item">
@@ -52,6 +55,12 @@
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Slot" asp-action="PersonalBooking">Personal Booking</a>
                                 </li>
                             }
+                        }
+                        @if (!SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
                         }
                     </ul>
                     <partial name = "_LoginPartial"/>
