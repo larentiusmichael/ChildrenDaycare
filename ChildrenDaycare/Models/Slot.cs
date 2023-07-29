@@ -32,5 +32,8 @@ namespace ChildrenDaycare.Models
         [Required(ErrorMessage = "Please enter price!")]
         public decimal SlotPrice { get; set; }
 
+        [ForeignKey("Id")]
+        public string? BookerID { get; set; }
+
     }
 }

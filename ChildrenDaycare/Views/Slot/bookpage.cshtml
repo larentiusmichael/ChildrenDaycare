@@ -1,13 +1,13 @@
 ﻿@model ChildrenDaycare.Controllers.SlotController
 @{
-    ViewData["Title"] = "editpage";
+    ViewData["Title"] = "bookpage";
 }
 
-<h1>Edit Slot Information</h1>
+<h1>Enter Booking Details</h1>
 <br />
 <hr />
 <br />
-<form method="post" asp-action="editslot" asp-controller="Slot">
+<form method="post" asp-action="bookslot" asp-controller="Slot">
     <table border="1">
         <tr>
             <th>Slot ID</th>
@@ -19,60 +19,54 @@
         <tr>
             <th>Date</th>
             <td>
-                <input asp-for="slot.SlotDate" class="form-control" type="date" />
+                <input asp-for="slot.SlotDate" class="form-control" type="date" readonly/>
                 <span asp-validation-for="slot.SlotDate"></span>
             </td>
         </tr>
         <tr>
             <th>Time</th>
             <td>
-                <select asp-for="slot.StartTime" asp-items="@Model.TimeOption" class="form-control"></select>
+                <select asp-for="slot.StartTime" asp-items="@Model.TimeOption" class="form-control" readonly></select>
                 <span asp-validation-for="slot.StartTime"></span>
             </td>
         </tr>
         <tr>
             <th>Takecare Giver</th>
             <td>
-                <select asp-for="slot.TakecareGiverID" asp-items="@Model.TakecareGiverOption" class="form-control"></select>
+                <select asp-for="slot.TakecareGiverID" asp-items="@Model.TakecareGiverOption" class="form-control" readonly></select>
                 <span asp-validation-for="slot.TakecareGiverID"></span>
             </td>
         </tr>
         <tr>
             <th>Child Fullname</th>
             <td>
-                <input asp-for="slot.ChildFullname" readonly>
+                <input asp-for="slot.ChildFullname">
                 <span asp-validation-for="slot.ChildFullname"></span>
             </td>
         </tr>
         <tr>
             <th>Child Age</th>
             <td>
-                <input asp-for="slot.ChildAge" readonly>
+                <input asp-for="slot.ChildAge">
                 <span asp-validation-for="slot.ChildAge"></span>
             </td>
         </tr>
         <tr>
             <th>Child DOB</th>
             <td>
-                <input asp-for="slot.ChildDOB" class="form-control" type="date" readonly>
+                <input asp-for="slot.ChildDOB" class="form-control" type="date">
                 <span asp-validation-for="slot.ChildDOB"></span>
-            </td>
-        </tr>
-        <tr>
-            <th>Booker Name</th>
-            <td>
-                <input asp-for="BookerName" readonly>
-                <span asp-validation-for="BookerName"></span>
             </td>
         </tr>
         <tr>
             <th>Price</th>
             <td>
-                <input asp-for="slot.SlotPrice" type="number" step="0.01">
+                <input asp-for="slot.SlotPrice" type="number" step="0.01" readonly>
                 <span asp-validation-for="slot.SlotPrice"></span>
             </td>
         </tr>
         <tr>
-            <td colspan="2" style="text-align:center"><button class="btn-outline-info" type="submit">Update Slot Info</button></td>
+            <td colspan="2" style="text-align:center"><button class="btn-outline-info" type="submit">Book Slot</button></td>
         </tr>
 </form>
+

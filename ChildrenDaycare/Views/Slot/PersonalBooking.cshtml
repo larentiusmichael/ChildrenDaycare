@@ -1,9 +1,9 @@
 ﻿@model List<ChildrenDaycare.Controllers.SlotController.SlotViewModel>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "PersonalBooking";
 }
 
-<h1>Slot List Infromation:</h1>
+<h1>Personal Booking:</h1>
 <br />
 <hr />
 @if (ViewBag.msg != "")
@@ -23,10 +23,8 @@
         <th>Child Fullname</th>
         <th>Child Age</th>
         <th>Child DOB</th>
-        <th>Booker Name</th>
         <th>Price</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>Action</th>
     </tr>
     <!--Dynamic row based on database-->
     @foreach (var singleslot in Model)
@@ -40,20 +38,12 @@
             <td>@singleslot.ChildFullname</td>
             <td>@singleslot.ChildAge</td>
             <td>@singleslot.ChildDOB?.ToString("yyyy-MM-dd")</td>
-            <td>@singleslot.BookerName</td>
             <td>@singleslot.SlotPrice</td>
             <td>
-                <a asp-action="editpage" asp-controller="Slot" asp-route-SlotID="@singleslot.SlotID">
-                    <button>Edit</button>
-                </a>
-            </td>
-            <td>
-                @if (string.IsNullOrEmpty(singleslot.BookerID))
-                {
-                    <a asp-action="deletepage" asp-controller="Slot" asp-route-SlotID="@singleslot.SlotID">
-                        <button>Delete</button>
-                    </a>
-                }
+                <form method="post" asp-action="cancelbooking" asp-controller="Slot">
+                    <input type="hidden" name="SlotID" value="@singleslot.SlotID" />
+                    <button type="submit">Cancel</button>
+                </form>
             </td>
         </tr>
     }
