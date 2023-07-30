@@ -23,13 +23,10 @@ namespace ChildrenDaycare.Models
 
         public bool isBooked { get; set; }
 
-        //[Required(ErrorMessage = "Please enter child fullname!")]
         public string? ChildFullname { get; set; }
 
-        //[Required(ErrorMessage = "Please enter child age!")]
         public int? ChildAge { get; set; }
 
-        //[Required(ErrorMessage = "Please select child date of birth!")]
         public DateTime? ChildDOB { get; set; }
 
         [Required(ErrorMessage = "Please enter price!")]

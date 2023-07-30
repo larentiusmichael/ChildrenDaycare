@@ -24,7 +24,7 @@
         <tr>
             <th>Date</th>
             <td>
-                <input type="text" asp-for="slot.SlotDate" readonly />
+                <input type="text" asp-for="slot.SlotDate" asp-format="{0:yyyy-MM-dd}" readonly />
                 <input type="hidden" asp-for="slot.SlotDate" />
             </td>
         </tr>

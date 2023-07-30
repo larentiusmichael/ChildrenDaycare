@@ -1,0 +1,34 @@
+﻿@model List<ChildrenDaycare.Areas.Identity.Data.ChildrenDaycareUser>
+@{
+    ViewData["Title"] = "DisplayUsers";
+}
+
+<h1>Display Users</h1>
+<br />
+<hr />
+<br />
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Fullname</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Date of Birth</th>
+        <th>User Role</th>
+    </tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Id</td>
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            <td>@user.UserFullname</td>
+            <td>@user.UserAge</td>
+            <td>@user.UserAddress</td>
+            <td>@user.UserDOB.ToShortDateString()</td>
+            <td>@user.userrole</td>
+        </tr>
+    }
+</table>

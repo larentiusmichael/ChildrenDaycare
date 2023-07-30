@@ -484,5 +484,38 @@ namespace ChildrenDaycare.Controllers
             return RedirectToAction("Login", "Account"); // Redirect to login page
         }
 
+        public async Task<IActionResult> DisplayForAll()
+        {
+            var slotList = await _context.SlotTable
+                    .Where(slot => slot.isBooked == false)
+                    .ToListAsync();
+
+            List<SlotViewModel> viewModelList = new List<SlotViewModel>();
+
+            foreach (var slot in slotList)
+            {
+                SlotViewModel viewModel = new SlotViewModel
+                {
+                    SlotID = slot.SlotID,
+                    SlotDate = slot.SlotDate,
+                    StartTime = slot.StartTime,
+                    EndTime = slot.EndTime,
+                    TakecareGiverID = slot.TakecareGiverID,
+                    isBooked = slot.isBooked,
+                    ChildFullname = slot.ChildFullname,
+                    ChildAge = slot.ChildAge,
+                    ChildDOB = slot.ChildDOB,
+                    SlotPrice = slot.SlotPrice,
+                    BookerID = slot.BookerID,
+                    TakecareGiverName = await GetTakecareGiverName(slot.TakecareGiverID),
+                    BookerName = await GetBookerName(slot.BookerID)
+                };
+
+                viewModelList.Add(viewModel);
+            }
+
+            return View(viewModelList);
+        }
+
     }
 }
