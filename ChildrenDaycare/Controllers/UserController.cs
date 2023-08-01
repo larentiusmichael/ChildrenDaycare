@@ -23,5 +23,20 @@ namespace ChildrenDaycare.Controllers
             var userList = _context.AspNetUsers.ToList();
             return View(userList);
         }
+
+        public async Task<IActionResult> Profile(string? UserID)
+        {
+            if (UserID == null)
+            {
+                return NotFound("user ID not found");
+            }
+
+            var user = await _context.Users.FindAsync(UserID);
+            if (user == null)
+            {
+                return NotFound("user not found");
+            }
+            return View(user);
+        }
     }
 }

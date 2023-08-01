@@ -3,44 +3,49 @@
     ViewData["Title"] = "TakecareGiverDisplay";
 }
 
-<h1>Schedule List:</h1>
-<br />
-<hr />
-<br />
-<form>
-    <label>Enter date for searching purpose: </label>
-    <input type="date" name="searchDate" pattern="\d{4}-\d{2}-\d{2}" />
-    <button type="submit" class="btn-info">Search Slot</button>
-</form>
-<br />
-<br />
-<table border="1">
-    <!--Static row-->
-    <tr style="background-color:yellow">
-        <th>Slot ID</th>
-        <th>Date</th>
-        <th>Start Time</th>
-        <th>End Time</th>
-        <th>Child Fullname</th>
-        <th>Child Age</th>
-        <th>Child DOB</th>
-        <th>Booker Name</th>
-        <th>Price</th>
-    </tr>
-    <!--Dynamic row based on database-->
-    @foreach (var singleslot in Model)
-    {
+<div class="container py-2">
+    <h3 class="mb-4">Schedule list</h3>
+    <div class="d-flex justify-content-between mb-4 align-items-end">
+        <form>
+            <div class="input-group d-flex align-items-center gap-3">
+                <label for="basic-url" class="form-label mb-0">Filter by date:</label>
+                <input type="date" name="searchDate" pattern="\d{4}-\d{2}-\d{2}" class="form-control rounded" id="basic-url" aria-describedby="basic-addon3 basic-addon4">
+                <button type="submit" class="btn btn-primary rounded">Confirm</button>
+            </div>
+        </form>
+    </div>
+  <div class="table-wrapper">
+    <table class="table table-hover">
+      <thead>
         <tr>
-            <td>@singleslot.SlotID</td>
-            <td>@singleslot.SlotDate.ToString("yyyy-MM-dd")</td>
-            <td>@singleslot.StartTime</td>
-            <td>@singleslot.EndTime</td>
-            <td>@singleslot.ChildFullname</td>
-            <td>@singleslot.ChildAge</td>
-            <td>@singleslot.ChildDOB?.ToString("yyyy-MM-dd")</td>
-            <td>@singleslot.BookerName</td>
-            <td>@singleslot.SlotPrice</td>
+            <th scope="col">Slot ID</th>
+            <th scope="col">Date</th>
+            <th scope="col">Start Time</th>
+            <th scope="col">End Time</th>
+            <th scope="col">Child Fullname</th>
+            <th scope="col">Child Age</th>
+            <th scope="col">Child DOB</th>
+            <th scope="col">Booker Name</th>
+            <th scope="col">Price</th>
         </tr>
-    }
-</table>
-
+      </thead>
+      <tbody>
+        <!--Dynamic row based on database-->
+        @foreach (var singleslot in Model)
+        {
+            <tr>
+                <td class="py-4">@singleslot.SlotID</td>
+                <td class="py-4">@singleslot.SlotDate.ToString("yyyy-MM-dd")</td>
+                <td class="py-4">@singleslot.StartTime</td>
+                <td class="py-4">@singleslot.EndTime</td>
+                <td class="py-4">@singleslot.ChildFullname</td>
+                <td class="py-4">@singleslot.ChildAge</td>
+                <td class="py-4">@singleslot.ChildDOB?.ToString("yyyy-MM-dd")</td>
+                <td class="py-4">@singleslot.BookerName</td>
+                <td class="py-4">@singleslot.SlotPrice</td>
+            </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -4,41 +4,46 @@
     ViewData["Title"] = "AddSlot";
 }
 
-<h1>Add Slot</h1>
+<div class="h-100 d-flex justify-content-center align-items-center">
+    <div class="shadow-sm p-5 border rounded">
+        <h3>Add Slot</h3>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="AddSlot" style="width: 25rem">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group mb-3">
+                        <label asp-for="slot.SlotDate" class="control-label">Slot Date</label>
+                        <input asp-for="slot.SlotDate" class="form-control" type="date" />
+                        <span asp-validation-for="slot.SlotDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="slot.StartTime">Time</label>
+                        <select asp-for="slot.StartTime" asp-items="@Model.TimeSelectList" class="form-control"></select>
+                        <span asp-validation-for="slot.StartTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="slot.TakecareGiverID">Takecare Giver</label>
+                        <select asp-for="slot.TakecareGiverID" asp-items="@Model.TakecareGiverSelectList" class="form-control"></select>
+                        <span asp-validation-for="slot.TakecareGiverID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="slot.SlotPrice" class="control-label">Price</label>
+                        <div class="input-group">
+                            <span class="input-group-text">RM</span>
+                            <input asp-for="slot.SlotPrice" class="form-control" type="number" step="0.01" />
+                        </div>
+                        <span asp-validation-for="slot.SlotPrice" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary w-100" />
+                    </div>
+                </form>
+            </div>
+        </div>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddSlot">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group mb-3">
-                <label asp-for="slot.SlotDate" class="control-label">Slot Date</label>
-                <input asp-for="slot.SlotDate" class="form-control" type="date" />
-                <span asp-validation-for="slot.SlotDate" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="slot.StartTime">Time</label>
-                <select asp-for="slot.StartTime" asp-items="@Model.TimeSelectList" class="form-control"></select>
-                <span asp-validation-for="slot.StartTime" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="slot.TakecareGiverID">Takecare Giver</label>
-                <select asp-for="slot.TakecareGiverID" asp-items="@Model.TakecareGiverSelectList" class="form-control"></select>
-                <span asp-validation-for="slot.TakecareGiverID" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="slot.SlotPrice" class="control-label">Price</label>
-                <input asp-for="slot.SlotPrice" class="form-control" type="number" step="0.01" />
-                <span asp-validation-for="slot.SlotPrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        <div class="mt-4 fs-6">
+            <a asp-action="Index">Back to List</a>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
