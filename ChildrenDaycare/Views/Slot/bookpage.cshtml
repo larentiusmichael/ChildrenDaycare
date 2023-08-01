@@ -3,94 +3,71 @@
     ViewData["Title"] = "bookpage";
 }
 
-<h1>Enter Booking Details</h1>
-<br />
-<hr />
 @if (ViewBag.msg != "")
 {
     <span style="background-color:orangered">@ViewBag.msg</span>
 }
-<hr />
-<br />
-<form method="post" asp-action="bookslot" asp-controller="Slot">
-    <table border="1">
-        <tr>
-            <th>Slot ID</th>
-            <td>
-                <input type="text" asp-for="slot.SlotID" readonly />
-                <input type="hidden" asp-for="slot.SlotID" />
-            </td>
-        </tr>
-        <tr>
-            <th>Date</th>
-            <td>
-                <input type="text" asp-for="slot.SlotDate" asp-format="{0:yyyy-MM-dd}" readonly />
-                <input type="hidden" asp-for="slot.SlotDate" />
-            </td>
-        </tr>
-        <tr>
-            <th>Start Time</th>
-            <td>
-                <input type="text" asp-for="slot.StartTime" readonly />
-                <input type="hidden" asp-for="slot.StartTime" />
-            </td>
-        </tr>
-        <tr>
-            <th>End Time</th>
-            <td>
-                <input type="text" asp-for="slot.EndTime" readonly />
-                <input type="hidden" asp-for="slot.EndTime" />
-            </td>
-        </tr>
-        <tr>
-            <th>Takecare Giver</th>
-            <td>
-                <input type="text" asp-for="TakecareGiverName" readonly />
-                <input type="hidden" asp-for="slot.TakecareGiverID" />
-            </td>
-        </tr>
-        <tr>
-            <th>Child Fullname</th>
-            <td>
-                <input asp-for="slot.ChildFullname" required>
-                <span asp-validation-for="slot.ChildFullname"></span>
-            </td>
-        </tr>
-        <tr>
-            <th>Child Age</th>
-            <td>
-                <input asp-for="slot.ChildAge" required>
-                <span asp-validation-for="slot.ChildAge"></span>
-            </td>
-        </tr>
-        <tr>
-            <th>Child DOB</th>
-            <td>
-                <input asp-for="slot.ChildDOB" class="form-control" type="date" required>
-                <span asp-validation-for="slot.ChildDOB"></span>
-            </td>
-        </tr>
-        <tr>
-            <th>Price</th>
-            <td>
-                <input type="text" asp-for="slot.SlotPrice" readonly />
-                <input type="hidden" asp-for="slot.SlotPrice" />
-            </td>
-        </tr>
-        <tr>
-            <th></th>
-            <td>
-                <input type="hidden" asp-for="slot.isBooked" />
-            </td>
-        </tr>
-        <tr>
-            <th></th>
-            <td>
-                <input type="hidden" asp-for="slot.BookerID" />
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align:center"><button class="btn-outline-info" type="submit">Book Slot</button></td>
-        </tr>
-</form>
 
+<div class="h-100 d-flex justify-content-center align-items-center">
+    <div class="shadow-sm p-5 border rounded">
+        <h3 class="text-center mb-4">Enter booking details</h3>
+        <form method="post" asp-action="bookslot" asp-controller="Slot" style="width: 500px">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-group mb-3">
+                <label asp-for="slot.SlotID">Slot ID</label>
+                <input asp-for="slot.SlotID" class="form-control" aria-required="true" placeholder="Laurentius Michael" disabled/>
+                <input type="hidden" asp-for="slot.SlotID" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="slot.SlotDate">Date</label>
+                <input asp-for="slot.SlotDate" class="form-control" aria-required="true" placeholder="25" disabled/>
+                <input type="hidden" asp-for="slot.SlotDate" />
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label asp-for="slot.StartTime">Start time</label>
+                    <input asp-for="slot.StartTime" class="form-control" aria-required="true" placeholder="Block A, 15th Floor, Jalan Tun Razak" disabled/>
+                    <input type="hidden" asp-for="slot.StartTime" />
+
+                </div>
+                <div class="col">
+                    <label asp-for="slot.EndTime">End time</label>
+                    <input asp-for="slot.EndTime" class="form-control" aria-required="true" placeholder="Block A, 15th Floor, Jalan Tun Razak" disabled/>
+                    <input type="hidden" asp-for="slot.EndTime" />
+                </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TakecareGiverName">Takecare giver</label>
+                <input asp-for="TakecareGiverName" class="form-control" aria-required="true" placeholder="25" disabled/>
+                <input type="hidden" asp-for="slot.TakecareGiverID" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="slot.ChildFullname">Child full name</label>
+                <input asp-for="slot.ChildFullname" class="form-control" aria-required="true" placeholder="John doe" required/>
+                <span asp-validation-for="slot.ChildFullname" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="slot.ChildAge">Child age</label>
+                <input asp-for="slot.ChildAge" class="form-control" aria-required="true" placeholder="3" required/>
+                <span asp-validation-for="slot.ChildAge" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="slot.ChildDOB">Child DOB</label>
+                <input type="date" asp-for="slot.ChildDOB" class="form-control" aria-required="true" required/>
+                <span asp-validation-for="slot.ChildDOB" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="slot.SlotPrice">Price</label>
+                <input asp-for="slot.SlotPrice" class="form-control" aria-required="true" placeholder="25" disabled required/>
+                <input type="hidden" asp-for="slot.SlotPrice" />
+            </div>
+            <div class="mb-3" hidden>
+                <input asp-for="slot.isBooked" class="form-control" aria-required="true" placeholder="25"/>
+            </div>
+            <div class="mb-3" hidden>
+                <input asp-for="slot.BookerID" class="form-control" aria-required="true" placeholder="25"/>
+            </div>
+            <button type="submit" class="w-100 btn btn-primary">Book slot</button>
+        </form>
+    </div>
+</div>
