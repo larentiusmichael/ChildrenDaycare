@@ -10,6 +10,7 @@
         <h1 class="text-center mb-4">@ViewData["Title"]</h1>
         <div>
             <form id="account" method="post" class="mx-auto mb-3" style="width: 22rem">
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="mb-3">
                     <label asp-for="Input.Email" class="form-label">Email address</label>
                     <input class="form-control" asp-for="Input.Email" aria-required="true" placeholder="name@example.com" >
