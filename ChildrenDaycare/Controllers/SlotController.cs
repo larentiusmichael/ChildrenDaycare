@@ -151,10 +151,15 @@ namespace ChildrenDaycare.Controllers
 
         //display for admin
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Index(string? msg)
+        public async Task<IActionResult> Index(string? msg, DateTime? searchDate)
         {
             var slotList = await _context.SlotTable.ToListAsync();
             List<SlotViewModel> viewModelList = new List<SlotViewModel>();
+
+            if (searchDate != null)
+            {
+                slotList = slotList.Where(s => s.SlotDate.Date == searchDate.Value.Date).ToList();
+            }
 
             foreach (var slot in slotList)
             {
@@ -282,13 +287,18 @@ namespace ChildrenDaycare.Controllers
 
         //display for public
         [Authorize(Roles = "Public")]
-        public async Task<IActionResult> PublicDisplay()
+        public async Task<IActionResult> PublicDisplay(DateTime? searchDate)
         {
             var slotList = await _context.SlotTable
                 .Where(slot => slot.isBooked == false)
                 .ToListAsync();
 
             List<SlotViewModel> viewModelList = new List<SlotViewModel>();
+
+            if (searchDate != null)
+            {
+                slotList = slotList.Where(s => s.SlotDate.Date == searchDate.Value.Date).ToList();
+            }
 
             foreach (var slot in slotList)
             {
@@ -442,7 +452,7 @@ namespace ChildrenDaycare.Controllers
 
         //display for takecare giver
         [Authorize(Roles = "Takecare Giver")]
-        public async Task<IActionResult> TakecareGiverDisplay()
+        public async Task<IActionResult> TakecareGiverDisplay(DateTime? searchDate)
         {
             // Retrieve the currently logged-in user
             var currentUser = await _userManager.GetUserAsync(User);
@@ -454,6 +464,11 @@ namespace ChildrenDaycare.Controllers
                     .ToListAsync();
 
                 List<SlotViewModel> viewModelList = new List<SlotViewModel>();
+
+                if (searchDate != null)
+                {
+                    slotList = slotList.Where(s => s.SlotDate.Date == searchDate.Value.Date).ToList();
+                }
 
                 foreach (var slot in slotList)
                 {
@@ -482,6 +497,44 @@ namespace ChildrenDaycare.Controllers
 
             // Handle the case when the user is not logged in (optional)
             return RedirectToAction("Login", "Account"); // Redirect to login page
+        }
+
+        public async Task<IActionResult> DisplayForAll(DateTime? searchDate)
+        {
+            var slotList = await _context.SlotTable
+                    .Where(slot => slot.isBooked == false)
+                    .ToListAsync();
+
+            List<SlotViewModel> viewModelList = new List<SlotViewModel>();
+
+            if (searchDate != null)
+            {
+                slotList = slotList.Where(s => s.SlotDate.Date == searchDate.Value.Date).ToList();
+            }
+
+            foreach (var slot in slotList)
+            {
+                SlotViewModel viewModel = new SlotViewModel
+                {
+                    SlotID = slot.SlotID,
+                    SlotDate = slot.SlotDate,
+                    StartTime = slot.StartTime,
+                    EndTime = slot.EndTime,
+                    TakecareGiverID = slot.TakecareGiverID,
+                    isBooked = slot.isBooked,
+                    ChildFullname = slot.ChildFullname,
+                    ChildAge = slot.ChildAge,
+                    ChildDOB = slot.ChildDOB,
+                    SlotPrice = slot.SlotPrice,
+                    BookerID = slot.BookerID,
+                    TakecareGiverName = await GetTakecareGiverName(slot.TakecareGiverID),
+                    BookerName = await GetBookerName(slot.BookerID)
+                };
+
+                viewModelList.Add(viewModel);
+            }
+
+            return View(viewModelList);
         }
 
     }

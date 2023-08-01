@@ -1,6 +1,6 @@
 ﻿@model List<ChildrenDaycare.Controllers.SlotController.SlotViewModel>
 @{
-    ViewData["Title"] = "PublicDisplay";
+    ViewData["Title"] = "DisplayForAll";
 }
 
 
@@ -22,9 +22,8 @@
         <th>Date</th>
         <th>Start Time</th>
         <th>End Time</th>
-        <th>Takecare Giver</th>
+        <th>Takecare Giver Name</th>
         <th>Price</th>
-        <th>Action</th>
     </tr>
     <!--Dynamic row based on database-->
     @foreach (var singleslot in Model)
@@ -36,11 +35,6 @@
             <td>@singleslot.EndTime</td>
             <td>@singleslot.TakecareGiverName</td>
             <td>@singleslot.SlotPrice</td>
-            <td>
-                <a asp-action="bookpage" asp-controller="Slot" asp-route-SlotID="@singleslot.SlotID">
-                    <button>Book</button>
-                </a>
-            </td>
         </tr>
     }
 </table>
