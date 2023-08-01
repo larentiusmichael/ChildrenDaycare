@@ -7,20 +7,25 @@
 <br />
 <hr />
 <br />
-<table>
+<table class="table table-striped table-hover table-bordered">
+  <thead>
     <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Fullname</th>
-        <th>Age</th>
-        <th>Address</th>
-        <th>Date of Birth</th>
-        <th>User Role</th>
+        <th scope="col">ID</th>
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Fullname</th>
+        <th scope="col">Age</th>
+        <th scope="col">Address</th>
+        <th scope="col">Date of Birth</th>
+        <th scope="col">User Role</th>
+        <th scope="col"></th>
     </tr>
+  </thead>
+  <tbody>
     @foreach (var user in Model)
     {
         <tr>
+          
             <td>@user.Id</td>
             <td>@user.UserName</td>
             <td>@user.Email</td>
@@ -28,7 +33,16 @@
             <td>@user.UserAge</td>
             <td>@user.UserAddress</td>
             <td>@user.UserDOB.ToShortDateString()</td>
-            <td>@user.userrole</td>
+            <td>
+              <span class="badge text-bg-dark">@user.userrole</span>
+            </td>
+            <td>
+              <a asp-action="Profile" asp-controller="User" asp-route-UserID="@user.Id">
+                <button class="btn btn-primary btn-sm">View profile</button>
+              </a>
+            </td>
         </tr>
     }
+  </tbody>
 </table>
+
