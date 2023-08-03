@@ -16,7 +16,7 @@ namespace ChildrenDaycare.Controllers
             _context = context;
         }
 
-        //Display users with Admin as userrole
+        //Display users
         [Authorize(Roles = "Admin")]
         public IActionResult DisplayUsers()
         {
@@ -24,6 +24,7 @@ namespace ChildrenDaycare.Controllers
             return View(userList);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Profile(string? UserID)
         {
             if (UserID == null)

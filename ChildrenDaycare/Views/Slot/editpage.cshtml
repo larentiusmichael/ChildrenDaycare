@@ -54,7 +54,10 @@
         <tr>
             <th>Child DOB</th>
             <td>
-                <input type="text" asp-for="slot.ChildDOB" readonly />
+                @{
+                    string formattedDate = Model.slot.ChildDOB?.ToString("yyyy-MM-dd");
+                }
+                <input type="text" asp-for="slot.ChildDOB" readonly value="@formattedDate" />
                 <input type="hidden" asp-for="slot.ChildDOB" />
             </td>
         </tr>

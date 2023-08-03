@@ -9,34 +9,47 @@
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">
-        <form id="profile-form" method="post">
+        <form id="profile-form" method="post" enctype="multipart/form-data" asp-page="Index" asp-page-handler="OnPostAsync">
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-group mb-3">
+                <label for="imagefile">Profile Picture:</label>
+                <!-- Hidden input to store the cropped image data -->
+                <input type="file" id="imagefile" name="imagefile" accept="image/*" style="display: none;" />
+                <div class="avatar-container" id="avatar-container">
+                    <!-- The avatar image will be displayed here -->
+                    <img id="avatar-preview" src="@Model.Input.ProfilePictureURL" alt="Preview" />
+                    <!-- Display the icon if the image is missing -->
+                    <div class="avatar-icon" id="avatar-icon">
+                        <i class="fa fa-user"></i>
+                    </div>
+                </div>
+            </div>
             <div class="form-floating mb-3">
                 <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
                 <label asp-for="Username" class="form-label"></label>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.UserFullname" class="form-control" placeholder="Please enter your fullname."/>
+                <input asp-for="Input.UserFullname" class="form-control" placeholder="Please enter your fullname." />
                 <label asp-for="Input.UserFullname" class="form-label"></label>
                 <span asp-validation-for="Input.UserFullname" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.UserAge" class="form-control" placeholder="Please enter your age."/>
+                <input asp-for="Input.UserAge" class="form-control" placeholder="Please enter your age." />
                 <label asp-for="Input.UserAge" class="form-label"></label>
                 <span asp-validation-for="Input.UserAge" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.UserAddress" class="form-control" placeholder="Please enter your address."/>
+                <input asp-for="Input.UserAddress" class="form-control" placeholder="Please enter your address." />
                 <label asp-for="Input.UserAddress" class="form-label"></label>
                 <span asp-validation-for="Input.UserAddress" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.UserDOB" class="form-control" placeholder="Please select your date of birth."/>
+                <input asp-for="Input.UserDOB" class="form-control" placeholder="Please select your date of birth." />
                 <label asp-for="Input.UserDOB" class="form-label"></label>
                 <span asp-validation-for="Input.UserDOB" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>

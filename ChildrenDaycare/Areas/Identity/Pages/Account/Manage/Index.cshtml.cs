@@ -10,6 +10,13 @@ using ChildrenDaycare.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Amazon;   //for linking your AWS account
+using Amazon.S3;
+using Amazon.S3.Model;
+using Microsoft.Extensions.Configuration;   //appsettings.json section
+using System.IO;  //input output
+using Microsoft.AspNetCore.Http;
+using NuGet.Common;
 
 namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
 {
@@ -24,6 +31,27 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
         {
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+
+        private const string bucketname = "childrendaycareddacgroup32";
+
+        //function extra: connection string to the AWS account
+        private List<string> getKeys()
+        {
+            List<string> keys = new List<string>();
+
+            //1. link to appsettinigs.json and get back the values
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+            IConfigurationRoot configure = builder.Build(); //build the json file
+
+            //2. read the info from json using configure instance
+            keys.Add(configure["Values:Key1"]);
+            keys.Add(configure["Values:Key2"]);
+            keys.Add(configure["Values:Key3"]);
+
+            return keys;
         }
 
         /// <summary>
@@ -78,6 +106,10 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Date of Birth")]
             [DataType(DataType.Date)]
             public DateTime UserDOB { get; set; }
+
+            public string? ProfilePictureURL { get; set; }
+
+            public string? S3Key { get; set; }
         }
 
         private async Task LoadAsync(ChildrenDaycareUser user)
@@ -94,7 +126,9 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
                 UserFullname = user.UserFullname,
                 UserAge = user.UserAge,
                 UserAddress = user.UserAddress,
-                UserDOB = user.UserDOB
+                UserDOB = user.UserDOB,
+                ProfilePictureURL = user.ProfilePictureURL,
+                S3Key = user.S3Key
             };
         }
 
@@ -110,7 +144,7 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile? imagefile)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -122,6 +156,56 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
             {
                 await LoadAsync(user);
                 return Page();
+            }
+
+            if (imagefile != null)
+            {
+                //return BadRequest("The image is here!");
+
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + imagefile.FileName;
+                var keyWithUserId = user.Id + "/" + uniqueFileName; // Concatenate UserID with uniqueFileName
+
+                //1. add credential for action
+                List<string> keys = getKeys();
+                var s3agent = new AmazonS3Client(keys[0], keys[1], keys[2], RegionEndpoint.USEast1);
+
+                //2. read image by image and store to S3
+                if (imagefile.Length > 1048576) //not more than 1MB
+                {
+                    return BadRequest("The image is over 1MB limit of size. Unable to upload!");
+                }
+                else if (imagefile.ContentType.ToLower() != "image/png" && imagefile.ContentType.ToLower() != "image/jpeg")
+                {
+                    return BadRequest("The image is not a valid image! Unable to upload!");
+                }
+
+                //if all the things passed the examination, then start send the file to the s3 bucket
+                //3. upload image to S3 and get the URL
+                try
+                {
+                    //upload to S3
+                    PutObjectRequest uploadRequest = new PutObjectRequest //generate the request
+                    {
+                        InputStream = imagefile.OpenReadStream(),
+                        BucketName = bucketname,
+                        Key = "images/" + keyWithUserId,
+                        CannedACL = S3CannedACL.PublicRead
+                    };
+
+                    //send out the request
+                    await s3agent.PutObjectAsync(uploadRequest);
+                }
+                catch (AmazonS3Exception ex)
+                {
+                    return BadRequest("Unable to upload to S3 due to technical issue. Error message: " + ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest("Unable to upload to S3 due to technical issue. Error message: " + ex.Message);
+                }
+
+                user.ProfilePictureURL = "https://" + bucketname + ".s3.amazonaws.com/images/" + keyWithUserId;
+                user.S3Key = keyWithUserId;
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
@@ -155,7 +239,15 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
                 user.UserDOB = Input.UserDOB;
             }
 
-            await _userManager.UpdateAsync(user);   //this line will only update your content in the db table
+            var updateResult = await _userManager.UpdateAsync(user);
+
+            // Check if the update was successful
+            if (!updateResult.Succeeded)
+            {
+                return BadRequest("Update database failed");
+            }
+
+            //await _userManager.UpdateAsync(user);   //this line will only update your content in the db table
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

@@ -23,5 +23,11 @@ public class ChildrenDaycareUser : IdentityUser
 
     [PersonalData]
     public string userrole { get; set; }
+
+    [PersonalData]
+    public string? ProfilePictureURL { get; set; }
+
+    [PersonalData]
+    public string? S3Key { get; set; }
 }
 
