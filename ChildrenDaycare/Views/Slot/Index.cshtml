@@ -5,7 +5,7 @@
 
 
 <div class="container py-2">
-    <h3 class="mb-4">Slots</h3>
+    <h3 class="mb-5">View slots</h3>
 
     @if (ViewBag.msg != "")
     {
@@ -31,7 +31,6 @@
     <table class="table table-hover">
       <thead>
         <tr>
-            <th scope="col">Slot ID</th>
             <th scope="col">Date</th>
             <th scope="col">Start Time</th>
             <th scope="col">End Time</th>
@@ -49,7 +48,6 @@
         @foreach (var singleslot in Model)
         {
             <tr>
-                <td class="py-4">@singleslot.SlotID</td>
                 <td class="py-4">@singleslot.SlotDate.ToString("yyyy-MM-dd")</td>
                 <td class="py-4">@singleslot.StartTime</td>
                 <td class="py-4">@singleslot.EndTime</td>

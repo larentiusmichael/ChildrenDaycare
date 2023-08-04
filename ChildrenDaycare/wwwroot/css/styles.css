@@ -1,32 +1,44 @@
 ﻿body {
-
+  background-color: rgb(255, 255, 255);
 }
 
 .avatar-container {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
 }
 
 #avatar-preview {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensure the image covers the entire container */
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image covers the entire container */
 }
 
 .avatar-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 24px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
 }
 
 /* Hide the file input */
 #imagefile {
-    display: none;
+  display: none;
+}
+
+.sidebar {
+  /* position: fixed; */
+  height: 100vh;
+  width: 280px;
+  background-color: white;
+}
+
+.main-content {
+  /* width: 100vw;
+  background: url("../hero-bg.png") top center no-repeat; */
 }

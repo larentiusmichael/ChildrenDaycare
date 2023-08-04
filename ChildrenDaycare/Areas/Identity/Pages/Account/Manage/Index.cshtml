@@ -17,7 +17,14 @@
                 <input type="file" id="imagefile" name="imagefile" accept="image/*" style="display: none;" />
                 <div class="avatar-container" id="avatar-container">
                     <!-- The avatar image will be displayed here -->
-                    <img id="avatar-preview" src="@Model.Input.ProfilePictureURL" alt="Preview" />
+                    @if (!string.IsNullOrEmpty(@Model.Input.ProfilePictureURL))
+                    {
+                        <img id="avatar-preview" src="@Model.Input.ProfilePictureURL" alt="Preview" />
+                    }
+                    else
+                    {
+                        <img id="avatar-preview" src="~/user-placeholder.png" alt="Preview" />
+                    }
                     <!-- Display the icon if the image is missing -->
                     <div class="avatar-icon" id="avatar-icon">
                         <i class="fa fa-user"></i>

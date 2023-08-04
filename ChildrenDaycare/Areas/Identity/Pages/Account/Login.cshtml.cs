@@ -131,11 +131,11 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
                         if (String.IsNullOrEmpty(userrole))
                             return RedirectToAction("Index", "Home");
                         else if (userrole.Equals("Admin"))
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Slot");
                         else if (userrole.Equals("Takecare Giver"))
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("TakecareGiverDisplay", "Slot");
                         else
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("PublicDisplay", "Slot");
                             //return Redirect("~/Identity/Account/Manage/Index");
                     }
                     //return LocalRedirect(returnUrl);

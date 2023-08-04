@@ -4,18 +4,13 @@
 }
 
 <div class="container py-2">
-  <h3 class="mb-4">Users</h3>
+  <h3 class="mb-5">Users</h3>
   <table class="table table-hover">
     <thead>
       <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Username</th>
-          <th scope="col">Email</th>
           <th scope="col">Fullname</th>
-          <th scope="col">Age</th>
-          <th scope="col">Address</th>
-          <th scope="col">Date of Birth</th>
           <th scope="col">User Role</th>
+          <th scope="col">Email</th>
           <th scope="col"></th>
       </tr>
     </thead>
@@ -23,16 +18,11 @@
       @foreach (var user in Model)
       {
           <tr>
-              <td class="py-4">@user.Id</td>
-              <td class="py-4">@user.UserName</td>
-              <td class="py-4">@user.Email</td>
               <td class="py-4">@user.UserFullname</td>
-              <td class="py-4">@user.UserAge</td>
-              <td class="py-4">@user.UserAddress</td>
-              <td class="py-4">@user.UserDOB.ToShortDateString()</td>
               <td class="py-4">
                 <span class="badge text-bg-dark">@user.userrole</span>
               </td>
+              <td class="py-4">@user.Email</td>
               <td class="py-4">
                 <a asp-action="Profile" asp-controller="User" asp-route-UserID="@user.Id">
                   <button class="btn btn-primary btn-sm">View profile</button>
