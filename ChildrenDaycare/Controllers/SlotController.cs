@@ -241,10 +241,14 @@ namespace ChildrenDaycare.Controllers
             {
                 _context.SlotTable.Remove(slot);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", new { msg = "Slot with ID " + SlotID + " has been deleted!" });
+
+                _toastNotification.Success("A slot has successfully been deleted!");
+
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
+                _toastNotification.Error("Failed to delete the slot. Please try again later.");
                 return RedirectToAction("Index", new { msg = "Slot with ID " + SlotID + " is unable to delete! Error: " + ex.Message });
             }
         }
@@ -285,7 +289,10 @@ namespace ChildrenDaycare.Controllers
 
                 _context.SlotTable.Update(slot);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", new { msg = "Update Successfully!" });
+
+                _toastNotification.Success("Slot has successfully been updated!");
+
+                return RedirectToAction("Index");
             }
             return View("editpage", slot.SlotID);
         }
