@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ChildrenDaycare.Data;
 using ChildrenDaycare.Areas.Identity.Data;
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ChildrenDaycareContextConnection") ?? throw new InvalidOperationException("Connection string 'ChildrenDaycareContextConnection' not found.");
@@ -13,6 +15,14 @@ builder.Services.AddDefaultIdentity<ChildrenDaycareUser>(options => options.Sign
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+// Toast
+builder.Services.AddNotyf(config =>
+{
+    config.DurationInSeconds = 3;
+    config.IsDismissable = true;
+    config.Position = NotyfPosition.TopCenter;
+});
 
 var app = builder.Build();
 
@@ -30,6 +40,8 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();    //direct login page
 app.UseAuthorization();     //check permission
+
+app.UseNotyf();
 
 app.MapControllerRoute(
     name: "default",

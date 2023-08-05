@@ -5,18 +5,15 @@
 
 <div class="container py-2">
     <h3 class="mb-4">Pending Approval to Become a Takecare Giver</h3>
-    <table class="table table-hover">
+    <table class="table table-hover align-middle">
         <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Username</th>
-                <th scope="col">Email</th>
                 <th scope="col">Fullname</th>
+                <th scope="col">Email</th>
                 <th scope="col">Age</th>
                 <th scope="col">Address</th>
                 <th scope="col">Date of Birth</th>
                 <th scope="col">User Role</th>
-                <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -24,10 +21,8 @@
             @foreach (var user in Model)
             {
                 <tr>
-                    <td class="py-4">@user.Id</td>
-                    <td class="py-4">@user.UserName</td>
-                    <td class="py-4">@user.Email</td>
                     <td class="py-4">@user.UserFullname</td>
+                    <td class="py-4">@user.Email</td>
                     <td class="py-4">@user.UserAge</td>
                     <td class="py-4">@user.UserAddress</td>
                     <td class="py-4">@user.UserDOB.ToShortDateString()</td>
@@ -38,8 +33,6 @@
                         <a asp-action="ApproveRequest" asp-controller="User" asp-route-UserID="@user.Id">
                             <button class="btn btn-primary btn-sm">Approve</button>
                         </a>
-                    </td>
-                    <td class="py-4">
                         <a asp-action="RejectRequest" asp-controller="User" asp-route-UserID="@user.Id">
                             <button class="btn btn-danger btn-sm">Reject</button>
                         </a>

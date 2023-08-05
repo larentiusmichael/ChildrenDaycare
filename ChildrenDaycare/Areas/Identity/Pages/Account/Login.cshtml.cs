@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using ChildrenDaycare.Areas.Identity.Data;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace ChildrenDaycare.Areas.Identity.Pages.Account
 {
@@ -24,12 +25,14 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
         private readonly SignInManager<ChildrenDaycareUser> _signInManager;
         private readonly UserManager<ChildrenDaycareUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly INotyfService _toastNotification;
 
-        public LoginModel(SignInManager<ChildrenDaycareUser> signInManager, UserManager<ChildrenDaycareUser> userManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ChildrenDaycareUser> signInManager, UserManager<ChildrenDaycareUser> userManager, ILogger<LoginModel> logger, INotyfService toastNotification)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
+            _toastNotification = toastNotification;
         }
 
         /// <summary>
@@ -122,7 +125,7 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
                     var user = await _userManager.FindByEmailAsync(Input.Email);
 
                     _logger.LogInformation("User logged in.");
-                    
+                    _toastNotification.Success("You have successfully logged in!");
                     if (String.IsNullOrEmpty(user.userrole))
                         return RedirectToAction("Index", "Home");
                     else if (user.userrole.Equals("Admin"))
@@ -151,6 +154,7 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
                 }
                 else
                 {
+                    _toastNotification.Error("Login failed. Please check your credentials!");
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }

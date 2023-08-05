@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using ChildrenDaycare.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace ChildrenDaycare.Controllers
 {
@@ -16,6 +17,7 @@ namespace ChildrenDaycare.Controllers
     {
         private readonly ChildrenDaycareContext _context;
         private readonly UserManager<ChildrenDaycareUser> _userManager;
+        private readonly INotyfService _toastNotification;
 
         public Slot slot { get; set; }
 
@@ -28,10 +30,11 @@ namespace ChildrenDaycare.Controllers
         public string TakecareGiverName { get; set; }
 
         //create constructor for linking db connection to this file
-        public SlotController(ChildrenDaycareContext context, UserManager<ChildrenDaycareUser> userManager)
+        public SlotController(ChildrenDaycareContext context, UserManager<ChildrenDaycareUser> userManager, INotyfService toastNotification)
         {
             _context = context; //for referring which db you want
             _userManager = userManager;
+            _toastNotification = toastNotification;
         }
 
         public class SlotViewModel
@@ -211,8 +214,10 @@ namespace ChildrenDaycare.Controllers
 
                 _context.SlotTable.Add(slot);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", new {msg = "Added Successfully!"});
+                _toastNotification.Success("New slot has successfully been added!");
+                return RedirectToAction("Index");
             }
+            _toastNotification.Error("Failed to add a new slot! Please try again later.");
             return View("AddSlot", this);  //error then keep the current slot info for editing
         }
 
@@ -344,8 +349,6 @@ namespace ChildrenDaycare.Controllers
 
             TakecareGiverName = await GetTakecareGiverName(slot.TakecareGiverID);
             BookerName = await GetBookerName(slot.BookerID);
-
-            ViewBag.msg = msg;
             return View(this);
         }
 
@@ -368,7 +371,10 @@ namespace ChildrenDaycare.Controllers
 
                     _context.SlotTable.Update(slot);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction("PersonalBooking", new { msg = "Booked Successfully!" });
+
+                    _toastNotification.Success("You have successfully book a slot!");
+                    
+                    return RedirectToAction("PersonalBooking");
                 }
             }
 

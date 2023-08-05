@@ -9,7 +9,6 @@
     <div class="shadow-sm p-5 border rounded">
         <h1 class="text-center mb-4">@ViewData["Title"]</h1>
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" style="width: 500px">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="mb-3">
                 <label asp-for="Input.UserFullname">Fullname</label>
                 <input asp-for="Input.UserFullname" class="form-control" autocomplete="userfullname" aria-required="true" placeholder="Laurentius Michael" />

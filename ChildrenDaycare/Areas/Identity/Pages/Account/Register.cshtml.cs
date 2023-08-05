@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace ChildrenDaycare.Areas.Identity.Pages.Account
 {
@@ -32,6 +33,7 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly INotyfService _toastNotification;
 
         public RegisterModel(
             UserManager<ChildrenDaycareUser> userManager,
@@ -39,7 +41,8 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
             SignInManager<ChildrenDaycareUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            INotyfService toastNotification)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -48,6 +51,7 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _toastNotification = toastNotification;
         }
 
         /// <summary>
@@ -194,6 +198,7 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
                     await _userManager.AddToRoleAsync(user, Input.userrole);
 
                     _logger.LogInformation("User created a new account with password.");
+                    _toastNotification.Success("User registration is successful!");
 
                     //var userId = await _userManager.GetUserIdAsync(user);
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -214,16 +219,18 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
                     }
                     else
                     {
+                        _toastNotification.Error("eeeee");
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
                 }
                 foreach (var error in result.Errors)
                 {
+                    _toastNotification.Error("Email is already taken.");
+                    _logger.LogInformation(error.Description);
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return Page();
         }
