@@ -31,6 +31,11 @@ namespace ChildrenDaycare.Controllers
             return View();
         }
 
+        public IActionResult Waiting()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

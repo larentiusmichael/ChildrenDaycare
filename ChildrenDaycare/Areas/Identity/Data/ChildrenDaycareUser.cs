@@ -29,5 +29,8 @@ public class ChildrenDaycareUser : IdentityUser
 
     [PersonalData]
     public string? S3Key { get; set; }
+
+    [PersonalData]
+    public bool isConfirmed { get; set; }
 }
 

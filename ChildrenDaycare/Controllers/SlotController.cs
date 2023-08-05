@@ -68,7 +68,7 @@ namespace ChildrenDaycare.Controllers
             get
             {
                 // Fetch users with the role "Takecare Giver" from the database
-                var takecareGiverUsers = _context.AspNetUsers.Where(u => u.userrole == "Takecare Giver").ToList();
+                var takecareGiverUsers = _context.AspNetUsers.Where(u => u.userrole == "Takecare Giver" && u.isConfirmed == true).ToList();
 
                 // Create a list of SelectListItems with user full names and Ids
                 var selectListItems = takecareGiverUsers.Select(u => new SelectListItem
@@ -106,8 +106,8 @@ namespace ChildrenDaycare.Controllers
 
         public SelectList EditTakecareGiverSelectList(string defaultTakecareGiverId)
         {
-            // Fetch users with the role "Takecare Giver" from the database
-            var takecareGiverUsers = _context.AspNetUsers.Where(u => u.userrole == "Takecare Giver").ToList();
+            // Fetch users with the role "Takecare Giver" from the database with confirmation status true
+            var takecareGiverUsers = _context.AspNetUsers.Where(u => u.userrole == "Takecare Giver" && u.isConfirmed == true).ToList();
 
             // Create a list of SelectListItems with user full names and Ids
             var selectListItems = takecareGiverUsers.Select(u => new SelectListItem

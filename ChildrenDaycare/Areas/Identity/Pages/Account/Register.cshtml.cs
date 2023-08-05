@@ -162,6 +162,14 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
                 user.UserAddress = Input.UserAddress;
                 user.userrole = Input.userrole;
                 user.EmailConfirmed = true;
+                if(Input.userrole == "Takecare Giver")
+                {
+                    user.isConfirmed = false;
+                }
+                else
+                {
+                    user.isConfirmed= true;
+                }
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

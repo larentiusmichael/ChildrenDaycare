@@ -117,29 +117,29 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
-                var users = from m in _userManager.Users
-                            where m.Email.Equals(Input.Email)
-                            select m.userrole;
-
-
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
 
-                    foreach (string userrole in users)
-                    {
-                        if (String.IsNullOrEmpty(userrole))
-                            return RedirectToAction("Index", "Home");
-                        else if (userrole.Equals("Admin"))
-                            return RedirectToAction("Index", "Slot");
-                        else if (userrole.Equals("Takecare Giver"))
+                    _logger.LogInformation("User logged in.");
+                    
+                    if (String.IsNullOrEmpty(user.userrole))
+                        return RedirectToAction("Index", "Home");
+                    else if (user.userrole.Equals("Admin"))
+                        return RedirectToAction("Index", "Slot");
+                    else if (user.userrole.Equals("Takecare Giver"))
+                        if(user.isConfirmed == true)
+                        {
                             return RedirectToAction("TakecareGiverDisplay", "Slot");
+                        }
                         else
-                            return RedirectToAction("PublicDisplay", "Slot");
-                            //return Redirect("~/Identity/Account/Manage/Index");
-                    }
-                    //return LocalRedirect(returnUrl);
+                        {
+                            return RedirectToAction("Waiting", "Home");
+                        }
+                    else
+                        return RedirectToAction("PublicDisplay", "Slot");
                 }
+
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });

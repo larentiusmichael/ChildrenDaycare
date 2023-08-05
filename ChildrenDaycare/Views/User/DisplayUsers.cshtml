@@ -5,12 +5,17 @@
 
 <div class="container py-2">
   <h3 class="mb-5">Users</h3>
+    @if (ViewBag.msg != "")
+    {
+        <span style="background-color:aquamarine">@ViewBag.msg</span>
+    }
   <table class="table table-hover">
     <thead>
       <tr>
           <th scope="col">Fullname</th>
           <th scope="col">User Role</th>
           <th scope="col">Email</th>
+          <th scope="col">Confirmation Status</th>
           <th scope="col"></th>
       </tr>
     </thead>
@@ -23,6 +28,7 @@
                 <span class="badge text-bg-dark">@user.userrole</span>
               </td>
               <td class="py-4">@user.Email</td>
+              <td class="py-4">@user.isConfirmed</td>
               <td class="py-4">
                 <a asp-action="Profile" asp-controller="User" asp-route-UserID="@user.Id">
                   <button class="btn btn-primary btn-sm">View profile</button>
