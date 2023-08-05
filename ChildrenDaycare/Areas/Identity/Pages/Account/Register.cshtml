@@ -6,7 +6,7 @@
 
 
 <div class="h-100 d-flex justify-content-center align-items-center">
-    <div class="shadow-sm p-5 border rounded">
+    <div class="shadow-sm py-4 px-5 border rounded">
         <h1 class="text-center mb-4">@ViewData["Title"]</h1>
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" style="width: 500px">
             <div class="mb-3">
@@ -56,6 +56,9 @@
                 <span asp-validation-for="Input.userrole" class="text-danger"></span>
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-primary">Register</button>
+            <p class="text-center mt-3 mb-0"><small>Don't have an account?
+                <a asp-area="Identity" asp-page="/Account/Register"> Register</a></small>
+            </p>
         </form>
     </div>
 </div>

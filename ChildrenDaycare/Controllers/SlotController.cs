@@ -460,7 +460,10 @@ namespace ChildrenDaycare.Controllers
 
             _context.SlotTable.Update(slot);
             await _context.SaveChangesAsync();
-            return RedirectToAction("PersonalBooking", new { msg = "You have cancelled your booking with ID "+ SlotID +"!" });
+
+            _toastNotification.Success("You have successfully cancel your booking!");
+
+            return RedirectToAction("PersonalBooking");
         }
 
         //display for takecare giver

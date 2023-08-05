@@ -124,8 +124,17 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
                 {
                     var user = await _userManager.FindByEmailAsync(Input.Email);
 
+                    if (user.isConfirmed)
+                    {
+                        _toastNotification.Success("You have successfully logged in!");
+                    }
+                    else
+                    {
+                        _toastNotification.Error("Failed to login! Your account is not verified yet.");
+                        await _signInManager.SignOutAsync();
+                    }
+
                     _logger.LogInformation("User logged in.");
-                    _toastNotification.Success("You have successfully logged in!");
                     if (String.IsNullOrEmpty(user.userrole))
                         return RedirectToAction("Index", "Home");
                     else if (user.userrole.Equals("Admin"))
@@ -137,7 +146,7 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
                         }
                         else
                         {
-                            return RedirectToAction("Waiting", "Home");
+                            return Page();
                         }
                     else
                         return RedirectToAction("PublicDisplay", "Slot");

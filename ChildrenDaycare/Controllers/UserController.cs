@@ -5,16 +5,19 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using ChildrenDaycare.Areas.Identity.Data;
 using ChildrenDaycare.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace ChildrenDaycare.Controllers
 {
     public class UserController : Controller
     {
         private readonly ChildrenDaycareContext _context;
+        private readonly INotyfService _toastNotification;
 
-        public UserController(ChildrenDaycareContext context)
+        public UserController(ChildrenDaycareContext context, INotyfService toastNotification)
         {
             _context = context;
+            _toastNotification = toastNotification;
         }
 
         //Display users
@@ -68,11 +71,13 @@ namespace ChildrenDaycare.Controllers
 
                 _context.Users.Update(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("DisplayUsers", new { msg = "Approve Successfully!" });
+                _toastNotification.Success("Takecare giver has successfully been approved!");
+                return RedirectToAction("DisplayUsers");
             }
             catch (Exception ex)
             {
-                return RedirectToAction("DisplayUsers", new { msg = "User with ID " + UserID + " is unable to approve! Error: " + ex.Message });
+                _toastNotification.Error("Failed to approve the takecare giver! Please try again later.");
+                return RedirectToAction("DisplayUsers");
             }
         }
 
@@ -93,11 +98,13 @@ namespace ChildrenDaycare.Controllers
             {
                 _context.Users.Remove(user);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("DisplayUsers", new { msg = "Reject Successfully!" });
+                _toastNotification.Success("Takecare giver has successfully been rejected!");
+                return RedirectToAction("DisplayUsers");
             }
             catch (Exception ex)
             {
-                return RedirectToAction("DisplayUsers", new { msg = "User with ID " + UserID + " is unable to delete! Error: " + ex.Message });
+                _toastNotification.Error("Failed to reject the takecare giver! Please try again later.");
+                return RedirectToAction("DisplayUsers");
             }
         }
     }
