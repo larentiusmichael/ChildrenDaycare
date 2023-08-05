@@ -55,14 +55,14 @@
         <div class="d-flex h-100">
             <div class="sidebar d-flex flex-column flex-shrink-0 p-3 shadow" >
                 <div  class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <img src="~/logo.png" alt="" width="100px">
+                <img src="~/logo.png" alt="" height="24px">
                 </div>
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto">
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        var user = await UserManager.GetUserAsync(User);
-                        if (await UserManager.IsInRoleAsync(user, "Admin"))
+                        var currentUser = await UserManager.GetUserAsync(User);
+                        if (await UserManager.IsInRoleAsync(currentUser, "Admin"))
                         {
                             <li class="nav-item">
                                 <a id="Slot" class="nav-link link-body-emphasis" asp-area="" asp-controller="Slot" asp-action="Index"><i class="bi bi-calendar me-2"></i>View slots</a>
@@ -74,13 +74,13 @@
                                 <a id="users" class="nav-link link-body-emphasis" asp-area="" asp-controller="User" asp-action="DisplayUsers"><i class="bi bi-people me-2"></i>Users</a>
                             </li>
                         }
-                        if (await UserManager.IsInRoleAsync(user, "Takecare Giver"))
+                        if (await UserManager.IsInRoleAsync(currentUser, "Takecare Giver"))
                         {
                             <li class="nav-item">
                                 <a id="users" class="nav-link link-body-emphasis" asp-area="" asp-controller="Slot" asp-action="TakecareGiverDisplay"><i class="bi bi-calendar3 me-2"></i>View schedule</a>
                             </li>
                         }
-                        if (await UserManager.IsInRoleAsync(user, "Public"))
+                        if (await UserManager.IsInRoleAsync(currentUser, "Public"))
                         {
                             <li class="nav-item">
                                 <a id="users" class="nav-link link-body-emphasis" asp-area="" asp-controller="Slot" asp-action="PublicDisplay"><i class="bi bi-calendar me-2"></i>View available slots</a>

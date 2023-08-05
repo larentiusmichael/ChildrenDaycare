@@ -15,6 +15,19 @@ namespace ChildrenDaycare.Controllers
 
         public IActionResult Index()
         {
+            System.Security.Claims.ClaimsPrincipal currentUser = User;
+            if (currentUser.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Slot");
+            }
+            else if (currentUser.IsInRole("Takecare Giver"))
+            {
+                return RedirectToAction("TakecareGiverDisplay", "Slot");
+            }
+            else if (currentUser.IsInRole("Public"))
+            {
+                return RedirectToAction("PublicDisplay", "Slot"); 
+            }
             return View();
         }
 
