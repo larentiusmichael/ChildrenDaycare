@@ -84,7 +84,6 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
                 new SelectListItem{Selected = true, Text = "Select Role", Value = ""},
                 new SelectListItem{Selected = true, Text = "Public", Value = "Public"},
                 new SelectListItem{Selected = true, Text = "Takecare Giver", Value = "Takecare Giver"},
-                new SelectListItem{Selected = true, Text = "Admin", Value = "Admin"},
             }, "Value", "Text", 1);
 
         public class InputModel

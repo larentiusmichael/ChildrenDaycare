@@ -27,18 +27,11 @@
                             @Html.DisplayNameFor(m => m.Input.RememberMe)
                         </label>
                     </div>
-                    <p><small>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a></small>
-                    </p>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Login</button>
             </form>
             <p class="text-center mb-0"><small>Don't have an account?
                 <a asp-area="Identity" asp-page="/Account/Register"> Register</a></small>
-            </p>
-            <p class="text-center mb-0"><small>
-                <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                </small>
             </p>
         </div>
     </div>
