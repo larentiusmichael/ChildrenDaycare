@@ -226,10 +226,17 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account
                 }
                 foreach (var error in result.Errors)
                 {
-                    _toastNotification.Error("Email is already taken.");
-                    _logger.LogInformation(error.Description);
+                    if (error.Code == "DuplicateEmail")
+                    {
+                        _toastNotification.Error("Email is already taken.");
+                    }
+                    _logger.LogInformation($"Error Code: {error.Code}, Description: {error.Description}");
+
+                    // Optionally, you can print the error to the console during development
+                    Console.WriteLine($"Error Code: {error.Code}, Description: {error.Description}");
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
+
             }
             // If we got this far, something failed, redisplay form
             return Page();
