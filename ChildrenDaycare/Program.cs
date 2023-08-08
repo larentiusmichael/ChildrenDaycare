@@ -4,6 +4,7 @@ using ChildrenDaycare.Data;
 using ChildrenDaycare.Areas.Identity.Data;
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
+using System.Net.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ChildrenDaycareContextConnection") ?? throw new InvalidOperationException("Connection string 'ChildrenDaycareContextConnection' not found.");
@@ -23,6 +24,8 @@ builder.Services.AddNotyf(config =>
     config.IsDismissable = true;
     config.Position = NotyfPosition.TopCenter;
 });
+
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
