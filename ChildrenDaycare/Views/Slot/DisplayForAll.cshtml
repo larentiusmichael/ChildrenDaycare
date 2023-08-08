@@ -12,30 +12,32 @@
             <button type="submit" class="btn btn-primary rounded">Confirm</button>
         </div>
     </form>
-    <table class="table table-hover">
-        <thead>
-            <tr>
-            <th scope="col">Slot ID</th>
-            <th scope="col">Date</th>
-            <th scope="col">Start Time</th>
-            <th scope="col">End Time</th>
-            <th scope="col">Takecare Giver Name</th>
-            <th scope="col">Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!--Dynamic row based on database-->
-            @foreach (var singleslot in Model)
-            {
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
                 <tr>
-                    <td class="py-4">@singleslot.SlotID</td>
-                    <td class="py-4">@singleslot.SlotDate.ToString("yyyy-MM-dd")</td>
-                    <td class="py-4">@singleslot.StartTime</td>
-                    <td class="py-4">@singleslot.EndTime</td>
-                    <td class="py-4">@singleslot.TakecareGiverName</td>
-                    <td class="py-4">@singleslot.SlotPrice</td>
+                <th scope="col">Slot ID</th>
+                <th scope="col">Date</th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+                <th scope="col">Takecare Giver Name</th>
+                <th scope="col">Price</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <!--Dynamic row based on database-->
+                @foreach (var singleslot in Model)
+                {
+                    <tr>
+                        <td class="py-4">@singleslot.SlotID</td>
+                        <td class="py-4">@singleslot.SlotDate.ToString("yyyy-MM-dd")</td>
+                        <td class="py-4">@singleslot.StartTime</td>
+                        <td class="py-4">@singleslot.EndTime</td>
+                        <td class="py-4">@singleslot.TakecareGiverName</td>
+                        <td class="py-4">@singleslot.SlotPrice</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
