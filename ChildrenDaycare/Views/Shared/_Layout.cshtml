@@ -145,12 +145,12 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const imageFileInput = document.getElementById("imagefile");
-            const avatarContainer = document.getElementById("avatar-container");
+            const profilePic = document.getElementById("profile-pic");
             const avatarPreview = document.getElementById("avatar-preview");
             const avatarIcon = document.getElementById("avatar-icon");
 
             // Trigger the file input click when the avatar container is clicked
-            avatarContainer.addEventListener("click", function () {
+            profilePic.addEventListener("click", function () {
                 imageFileInput.click();
             });
 

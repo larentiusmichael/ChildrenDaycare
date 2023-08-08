@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;   //appsettings.json section
 using System.IO;  //input output
 using Microsoft.AspNetCore.Http;
 using NuGet.Common;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
 {
@@ -24,16 +25,19 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ChildrenDaycareUser> _userManager;
         private readonly SignInManager<ChildrenDaycareUser> _signInManager;
+        private readonly INotyfService _toastNotification;
 
         public IndexModel(
             UserManager<ChildrenDaycareUser> userManager,
-            SignInManager<ChildrenDaycareUser> signInManager)
+            SignInManager<ChildrenDaycareUser> signInManager,
+            INotyfService toastNotification)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _toastNotification = toastNotification;
         }
 
-        private const string bucketname = "childrendaycareddacgroup32";
+        private const string bucketname = "tp061297-testing";
 
         //function extra: connection string to the AWS account
         private List<string> getKeys()
@@ -250,7 +254,8 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
             //await _userManager.UpdateAsync(user);   //this line will only update your content in the db table
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            // StatusMessage = "Your profile has been updated";
+            _toastNotification.Success("Your profile has been updated!");
             return RedirectToPage();
         }
     }
