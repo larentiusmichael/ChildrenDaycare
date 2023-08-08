@@ -38,6 +38,41 @@
   background-color: white;
 }
 
+.lp-bg {
+  background-image: url("https://www.simplemost.com/wp-content/uploads/2018/04/AdobeStock_158421138.jpeg");
+  height: 700px;
+  position: relative;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: 1;
+}
+
+.lp-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 0;
+}
+
+.container.d-flex {
+  z-index: 2;
+}
+
+.left-align {
+  text-align: left !important;
+}
+
+.w-fit {
+  width: fit-content;
+}
+
+
+
 .main-content {
   /* width: 100vw;
   background: url("../hero-bg.png") top center no-repeat; */
