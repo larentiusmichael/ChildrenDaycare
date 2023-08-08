@@ -5,6 +5,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using ChildrenDaycare.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,15 +19,18 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ChildrenDaycareUser> _userManager;
         private readonly SignInManager<ChildrenDaycareUser> _signInManager;
         private readonly ILogger<ChangePasswordModel> _logger;
+        private readonly INotyfService _toastNotification;
 
         public ChangePasswordModel(
             UserManager<ChildrenDaycareUser> userManager,
             SignInManager<ChildrenDaycareUser> signInManager,
-            ILogger<ChangePasswordModel> logger)
+            ILogger<ChangePasswordModel> logger,
+            INotyfService toastNotification)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _toastNotification = toastNotification;
         }
 
         /// <summary>
@@ -120,7 +124,7 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
 
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            _toastNotification.Success("Your password has been changed.");
 
             return RedirectToPage();
         }
