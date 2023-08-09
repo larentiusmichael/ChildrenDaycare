@@ -71,7 +71,38 @@
   width: fit-content;
 }
 
+.mt-80px {
+  margin-top: 80px;
+}
 
+.custom-hr {
+  border: 3px solid #0B6FFD;
+  width: 22%;
+}
+
+.number-circle {
+  width: 35px;
+  height: 35px;
+  background-color: #0B6FFD;
+  color: #ffffff;
+}
+
+.content-font{
+  font-size: 22px;
+}
+
+.custom-me-6 {
+  margin-right: 5rem;  /* Adjust the value as per your requirement */
+}
+
+.bg-grey-light {
+  background-color: #F2F2F2;
+}
+
+.py-40px{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
 
 .main-content {
   /* width: 100vw;

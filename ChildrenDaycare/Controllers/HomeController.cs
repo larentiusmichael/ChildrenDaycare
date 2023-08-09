@@ -24,40 +24,40 @@ namespace ChildrenDaycare.Controllers
         _client = client;
     }
 
-public async Task<IActionResult> Index()
-{
-    System.Security.Claims.ClaimsPrincipal currentUser = User;
-
-    var userClaims = new Dictionary<string, string>();
-    foreach (var claim in currentUser.Claims)
+    public async Task<IActionResult> Index()
     {
-        userClaims[claim.Type] = claim.Value;
-    }
+        System.Security.Claims.ClaimsPrincipal currentUser = User;
 
-    var request = new HttpRequestMessage(HttpMethod.Post, "https://6y6yqe9s73.execute-api.us-east-1.amazonaws.com/Development");
-    request.Content = new StringContent(JsonConvert.SerializeObject(userClaims), Encoding.UTF8, "application/json");
-
-    var response = await _client.SendAsync(request);
-
-    if (response.IsSuccessStatusCode)
-    {
-        var responseString = await response.Content.ReadAsStringAsync();
-        var responseObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseString);
-
-        var actionControllerPair = responseObject["body"].Split('-');
-        var actionName = actionControllerPair[0];
-        var controllerName = actionControllerPair.Length > 1 ? actionControllerPair[1] : "Home";
-
-        if (actionName == "Home" && controllerName == "Home")
+        var userClaims = new Dictionary<string, string>();
+        foreach (var claim in currentUser.Claims)
         {
-            return View();
+            userClaims[claim.Type] = claim.Value;
         }
 
-        return RedirectToAction(actionName, controllerName);
-    }
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://6y6yqe9s73.execute-api.us-east-1.amazonaws.com/Development");
+        request.Content = new StringContent(JsonConvert.SerializeObject(userClaims), Encoding.UTF8, "application/json");
 
-    return View();
-}
+        var response = await _client.SendAsync(request);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var responseString = await response.Content.ReadAsStringAsync();
+            var responseObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseString);
+
+            var actionControllerPair = responseObject["body"].Split('-');
+            var actionName = actionControllerPair[0];
+            var controllerName = actionControllerPair.Length > 1 ? actionControllerPair[1] : "Home";
+
+            if (actionName == "Home" && controllerName == "Home")
+            {
+                return View();
+            }
+
+            return RedirectToAction(actionName, controllerName);
+        }
+
+        return View();
+    }
 
         public IActionResult Waiting()
         {
