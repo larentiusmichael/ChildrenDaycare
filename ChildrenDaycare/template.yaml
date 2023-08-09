@@ -1,0 +1,17 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Serverless Application that will host a Lambda function to return a specific view based on the role of the user.
+
+Resources:
+  RoleBasedViewFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: Lambda/MyFunction/src/MyFunction/
+      Handler: MyFunction::MyFunction.Function::FunctionHandler
+      Runtime: provided.al2
+      MemorySize: 256
+      Timeout: 30
+      Architectures: 
+        - x86_64
+    Metadata:
+      BuildMethod: dotnet7
