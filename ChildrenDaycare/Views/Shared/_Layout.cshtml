@@ -20,33 +20,36 @@
     @if (!SignInManager.IsSignedIn(User))
     {
         <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white shadow-sm py-3">
-                <div class="container">           
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/logo.png" alt="" width="100px"></a>
-                    <div class="mt-auto">
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
-                    <div class="mt-auto d-none d-sm-block">
-                        <div class="navbar-collapse collapse d-sm-inline-flex align-items-center">
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-semibold" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-semibold" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark fw-semibold" asp-area="" asp-controller="Slot" asp-action="DisplayForAll">Available Slot</a>
-                                </li>
-                            </ul>
-                            <partial name="_LoginPartial"/>
-                        </div>
-                    </div>
-                </div>
-            </nav>
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white shadow-sm py-3">
+    <div class="container d-flex justify-content-between">  
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+            <img src="~/logo.png" alt="" width="100px">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="w-100"></div>
+            <div id="navbarContent" class="navbar-collapse collapse d-md-flex">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fw-semibold" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark fw-semibold" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                    <li class="nav-item" >
+                        <a class="nav-link text-dark fw-semibold" asp-area="" asp-controller="Slot" asp-action="DisplayForAll">Slot</a>
+                    </li>
+                </ul>
+                <partial name="_LoginPartial"/>
+            </div>
+
+    </div>
+</nav>
+
+
         </header>
         <div class="flex-grow-1 main-content">
             <main role="main" class="pb-3 h-100">
