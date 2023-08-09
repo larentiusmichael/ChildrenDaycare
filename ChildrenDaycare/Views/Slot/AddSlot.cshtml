@@ -1,14 +1,14 @@
 ﻿@model ChildrenDaycare.Controllers.SlotController
 
 @{
-    ViewData["Title"] = "AddSlot";
+    ViewData["Title"] = "Add slot";
 }
 
 <div class="container py-2">
     <h3 class="mb-5">Add slot</h3>
 
     <form asp-action="AddSlot" class="container py-2">
-        <div  class="row shadow-sm p-4 border rounded">
+        <div  class="row shadow p-4 border rounded-5">
             <div class="col-6">
                 <h5>Slot details</h5>
                 <p class="text-secondary">Fill up your slot details.</p>
@@ -22,12 +22,12 @@
                     </div>
                     <div class="form-group mb-4">
                         <label asp-for="slot.StartTime">Time</label>
-                        <select asp-for="slot.StartTime" asp-items="@Model.TimeSelectList" class="form-control"></select>
+                        <select asp-for="slot.StartTime" asp-items="@Model.TimeSelectList" class="form-control select"></select>
                         <span asp-validation-for="slot.StartTime" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-4">
                         <label asp-for="slot.TakecareGiverID">Takecare Giver</label>
-                        <select asp-for="slot.TakecareGiverID" asp-items="@Model.TakecareGiverSelectList" class="form-control"></select>
+                        <select asp-for="slot.TakecareGiverID" asp-items="@Model.TakecareGiverSelectList" class="form-control select"></select>
                         <span asp-validation-for="slot.TakecareGiverID" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-4">
@@ -42,8 +42,8 @@
                 </div>
             </div>
         </div>
-        <div class="mt-3">
-            <input type="submit" value="Create" class="btn btn-primary d-block mx-auto" />
+        <div class="d-flex justify-content-center mt-4">
+            <input type="submit" value="Create" class="btn btn-primary" />
         </div>
     </form>
 </div>

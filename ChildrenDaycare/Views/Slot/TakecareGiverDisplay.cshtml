@@ -1,6 +1,6 @@
 ﻿@model List<ChildrenDaycare.Controllers.SlotController.SlotViewModel>
 @{
-    ViewData["Title"] = "TakecareGiverDisplay";
+    ViewData["Title"] = "View schedule";
 }
 
 <div class="container py-2">
@@ -14,14 +14,13 @@
             </div>
         </form>
     </div>
-  <div class="table-wrapper table-responsive">
+  <div class="table-wrapper table-responsive shadow border rounded-5">
     <table class="table table-hover align-middle">
-      <thead>
+      <thead class="bg-light">
         <tr>
             <th scope="col">Slot ID</th>
             <th scope="col">Date</th>
-            <th scope="col">Start Time</th>
-            <th scope="col">End Time</th>
+            <th scope="col">Time</th>
             <th scope="col">Child Fullname</th>
             <th scope="col">Child Age</th>
             <th scope="col">Child DOB</th>
@@ -36,13 +35,17 @@
             <tr>
                 <td class="py-4">@singleslot.SlotID</td>
                 <td class="py-4">@singleslot.SlotDate.ToString("yyyy-MM-dd")</td>
-                <td class="py-4">@singleslot.StartTime</td>
-                <td class="py-4">@singleslot.EndTime</td>
+                <td class="py-4">
+                  @{
+                    var time = singleslot.StartTime + " - " + singleslot.EndTime;
+                  }
+                  @time
+                </td>
                 <td class="py-4">@singleslot.ChildFullname</td>
                 <td class="py-4">@singleslot.ChildAge</td>
                 <td class="py-4">@singleslot.ChildDOB?.ToString("yyyy-MM-dd")</td>
                 <td class="py-4">@singleslot.BookerName</td>
-                <td class="py-4">@singleslot.SlotPrice</td>
+                <td class="py-4">RM @singleslot.SlotPrice</td>
             </tr>
         }
       </tbody>

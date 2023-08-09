@@ -5,7 +5,7 @@
     ViewData["ActivePage"] = ManageNavPages.Email;
 }
 
-<h3>@ViewData["Title"]</h3>
+<h4>@ViewData["Title"]</h4>
 <div class="row mt-4">
     <div class="col-md-6">
         <form id="email-form" method="post">
@@ -18,7 +18,9 @@
                 <input asp-for="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true" placeholder="Please enter new email." />
                 <span asp-validation-for="Input.NewEmail" class="text-danger"></span>
             </div>
-            <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="btn btn-primary">Change email</button>
+            <div class="d-flex justify-content-center">
+                <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="btn btn-primary">Change email</button>
+            </div>
         </form>
     </div>
 </div>

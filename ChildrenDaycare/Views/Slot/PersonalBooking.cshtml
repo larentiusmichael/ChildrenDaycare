@@ -1,18 +1,16 @@
 ﻿@model List<ChildrenDaycare.Controllers.SlotController.SlotViewModel>
 @{
-    ViewData["Title"] = "PersonalBooking";
+    ViewData["Title"] = "Personal booking";
 }
 
 <div class="container py-2">
     <h3 class="mb-5">Personal booking</h3>
-    <div class="table-responsive">
+    <div class="table-responsive rounded-5 border shadow mb-5">
         <table class="table table-hover align-middle">
-            <thead>
+            <thead class="bg-light">
                 <tr>
-                    <th scope="col">Slot ID</th>
                     <th scope="col">Date</th>
-                    <th scope="col">Start Time</th>
-                    <th scope="col">End Time</th>
+                    <th scope="col">Time</th>
                     <th scope="col">Takecare Giver</th>
                     <th scope="col">Child Fullname</th>
                     <th scope="col">Child Age</th>
@@ -26,10 +24,14 @@
             @foreach (var singleslot in Model)
             {
                 <tr>
-                    <td class="py-4">@singleslot.SlotID</td>
                     <td class="py-4">@singleslot.SlotDate.ToString("yyyy-MM-dd")</td>
-                    <td class="py-4">@singleslot.StartTime</td>
-                    <td class="py-4">@singleslot.EndTime</td>
+                    <td class="py-4">
+                        @{
+                            DateTime startTime = DateTime.ParseExact(singleslot.StartTime.ToString(), "HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                            DateTime endTime = DateTime.ParseExact(singleslot.EndTime.ToString(), "HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                        }
+                        @startTime.ToString("hh:mm tt") - @endTime.ToString("hh:mm tt")
+                    </td>
                     <td class="py-4">@singleslot.TakecareGiverName</td>
                     <td class="py-4">@singleslot.ChildFullname</td>
                     <td class="py-4">@singleslot.ChildAge</td>

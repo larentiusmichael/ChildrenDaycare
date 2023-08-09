@@ -1,13 +1,13 @@
 ﻿@model List<ChildrenDaycare.Areas.Identity.Data.ChildrenDaycareUser>
 @{
-    ViewData["Title"] = "PendingApproval";
+    ViewData["Title"] = "Takecare giver approval";
 }
 
 <div class="container py-2">
     <h3 class="mb-5">Takecare giver approval</h3>
-    <div class="table-responsive">
+    <div class="table-responsive border shadow rounded-5 mb-5">
         <table class="table table-hover align-middle">
-            <thead>
+            <thead class="bg-light">
                 <tr>
                     <th scope="col">Fullname</th>
                     <th scope="col">Email</th>
@@ -28,7 +28,7 @@
                         <td class="py-4">@user.UserAddress</td>
                         <td class="py-4">@user.UserDOB.ToShortDateString()</td>
                         <td class="py-4">
-                            <span class="badge text-bg-dark">@user.userrole</span>
+                            <h6 class="mb-0"><span class="badge text-bg-dark">@user.userrole</span></h6>
                         </td>
                         <td class="py-4">
                             <div class="d-flex gap-3">

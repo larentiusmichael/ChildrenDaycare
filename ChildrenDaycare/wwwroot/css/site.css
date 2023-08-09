@@ -12,3 +12,11 @@ html {
   position: relative;
   min-height: 100%;
 }
+
+table {
+  margin-bottom: 0 !important;
+}
+
+.form-control:disabled {
+  background-color: #f1f3f5;
+}

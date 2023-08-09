@@ -1,13 +1,13 @@
 ﻿@model List<ChildrenDaycare.Areas.Identity.Data.ChildrenDaycareUser>
 @{
-    ViewData["Title"] = "DisplayUsers";
+    ViewData["Title"] = "Display users";
 }
 
 <div class="container py-2">
   <h3 class="mb-5">Users</h3>
-  <div class="table-responsive">
+  <div class="table-responsive shadow border rounded-5 mb-5">
     <table class="table table-hover align-middle">
-      <thead>
+    <thead class="bg-light">
         <tr>
             <th scope="col">Full name</th>
             <th scope="col">User Role</th>
@@ -22,7 +22,7 @@
             <tr>
                 <td class="py-4">@user.UserFullname</td>
                 <td class="py-4">
-                  <span class="badge text-bg-dark">@user.userrole</span>
+                  <h6 class="mb-0"><span class="badge text-bg-dark">@user.userrole</span></h6>
                 </td>
                 <td class="py-4">@user.Email</td>
                 <td class="py-4">

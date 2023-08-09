@@ -62,8 +62,8 @@ namespace ChildrenDaycare.Controllers
             new List<SelectListItem>
             {
                 new SelectListItem{Selected = true, Text = "Select Time", Value = null},
-                new SelectListItem{Selected = true, Text = "09:00AM - 01:00PM", Value = "09:00"},
-                new SelectListItem{Selected = true, Text = "02:00PM - 06:00PM", Value = "14:00"},
+                new SelectListItem{Selected = true, Text = "09:00AM - 01:00PM", Value = "09:00:00"},
+                new SelectListItem{Selected = true, Text = "02:00PM - 06:00PM", Value = "14:00:00"},
             }, "Value", "Text", 1);
 
         public SelectList TakecareGiverSelectList
