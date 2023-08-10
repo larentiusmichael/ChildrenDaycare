@@ -37,7 +37,7 @@ namespace ChildrenDaycare.Areas.Identity.Pages.Account.Manage
             _toastNotification = toastNotification;
         }
 
-        private const string bucketname = "tp061297-testing";
+        private const string bucketname = "childrendaycareddacgroup32";
 
         //function extra: connection string to the AWS account
         private List<string> getKeys()

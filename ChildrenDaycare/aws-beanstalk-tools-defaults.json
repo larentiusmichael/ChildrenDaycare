@@ -1,0 +1,20 @@
+
+{
+    "region" : "us-east-1",
+    "configuration" : "Debug",
+    "framework"     : "net7.0",
+    "self-contained" : true,
+    "application"    : "ChildrenDaycare",
+    "environment"    : "ChildrenDaycare-test",
+    "enable-xray"    : true,
+    "enhanced-health-type" : "enhanced",
+    "additional-options"   : "",
+    "solution-stack"       : "64bit Amazon Linux 2 v2.5.6 running .NET Core",
+    "environment-type"     : "SingleInstance",
+    "cname"                : "wecare-childrendaycare",
+    "instance-type"        : "t2.micro",
+    "key-pair"             : "example",
+    "instance-profile"     : "LabInstanceProfile",
+    "service-role"         : "LabRole",
+    "proxy-server"         : "nginx"
+}

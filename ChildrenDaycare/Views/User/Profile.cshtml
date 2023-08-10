@@ -18,7 +18,7 @@
                             var profilePictureExists = string.IsNullOrEmpty(@Model.ProfilePictureURL);
                             if (!profilePictureExists)
                             {
-                              var cloudFrontImageUrl = "https://doc23p8eowmdf.cloudfront.net/images/" + @Model.S3Key;
+                              var cloudFrontImageUrl = "https://d3tnb0kq1a97oe.cloudfront.net/images/" + @Model.S3Key;
                               <img id="avatar-preview" src="@cloudFrontImageUrl" alt="User" />
                             }
                             else

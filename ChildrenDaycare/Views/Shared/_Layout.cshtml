@@ -134,7 +134,7 @@
                         @{
                             var user = await @UserManager.GetUserAsync(User);
                             if (!string.IsNullOrEmpty(user.ProfilePictureURL)) {
-                                var cloudFrontImageUrl = "https://doc23p8eowmdf.cloudfront.net/images/" + @user.S3Key;
+                                    var cloudFrontImageUrl = "https://d3tnb0kq1a97oe.cloudfront.net/images/" + @user.S3Key;
                                 <img src="@cloudFrontImageUrl" alt="" width="32" height="32" class="rounded-circle me-2">
                             }
                             else

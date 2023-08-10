@@ -5,6 +5,7 @@ using ChildrenDaycare.Areas.Identity.Data;
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
 using System.Net.Http;
+using Amazon.XRay.Recorder.Handlers.AwsSdk;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ChildrenDaycareContextConnection") ?? throw new InvalidOperationException("Connection string 'ChildrenDaycareContextConnection' not found.");
@@ -16,6 +17,7 @@ builder.Services.AddDefaultIdentity<ChildrenDaycareUser>(options => options.Sign
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+AWSSDKHandler.RegisterXRayForAllServices();
 
 // Toast
 builder.Services.AddNotyf(config =>
@@ -36,6 +38,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseXRay("ChildrenDaycare System");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
