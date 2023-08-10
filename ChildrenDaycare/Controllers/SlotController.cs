@@ -10,6 +10,9 @@ using System.ComponentModel.DataAnnotations;
 using ChildrenDaycare.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Newtonsoft.Json;
+using System.Text;
+using System.Dynamic;
 
 namespace ChildrenDaycare.Controllers
 {
@@ -203,22 +206,37 @@ namespace ChildrenDaycare.Controllers
         [ValidateAntiForgeryToken]  //avoid cross-site attack
         public async Task<IActionResult> AddSlot(Slot slot)
         {
-            if(ModelState.IsValid)  //if the form no issue, then add to table
-            {
-                slot.EndTime = GetEndTime(slot.StartTime);
-                slot.isBooked = false;
-                slot.ChildFullname = null;
-                slot.ChildAge = null;
-                slot.ChildDOB = null;
-                slot.BookerID = null;
+            HttpClient httpClient = new HttpClient();
 
-                _context.SlotTable.Add(slot);
-                await _context.SaveChangesAsync();
+            var newSlot = new Slot{
+                SlotDate = slot.SlotDate,
+                StartTime = slot.StartTime,
+                EndTime = GetEndTime(slot.StartTime),
+                TakecareGiverID = slot.TakecareGiverID,
+                isBooked = false,
+                SlotPrice = slot.SlotPrice,
+                ChildFullname = null,
+                ChildAge = null,
+                ChildDOB = null,
+                BookerID = null,
+            };
+
+            dynamic request = new ExpandoObject();
+            request.body = newSlot;
+
+            var json = JsonConvert.SerializeObject(request);
+            var data = new StringContent(json, Encoding.UTF8,"application/json");
+
+            var response = await httpClient.PostAsync("https://3zsttyky27.execute-api.us-east-1.amazonaws.com/dev/slots", data);
+            Console.WriteLine(response);
+            if (response.IsSuccessStatusCode)
+            {
                 _toastNotification.Success("New slot has successfully been added!");
                 return RedirectToAction("Index");
             }
+            
             _toastNotification.Error("Failed to add a new slot! Please try again later.");
-            return View("AddSlot", this);  //error then keep the current slot info for editing
+            return View("AddSlot", this);  //error then keep the current slot info for edi
         }
 
         //delete
